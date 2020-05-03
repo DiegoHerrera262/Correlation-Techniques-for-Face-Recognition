@@ -1,4 +1,4 @@
-%VLC CORRELATOR SIMPLE SIMULATION-LUIS CARLOS DURAN
+%VLC CORRELATOR SIMPLE SIMULATION 2-LUIS CARLOS DURAN
 %Date: 28-04-2020
 %This code calculates and shows the result of the correlation function
 %between a target and a reference image, using the method of a VLC type architecture.
@@ -22,9 +22,6 @@ img_t2=imread('mosaico1.png');
 img_t2=imresize3(img_t2,size(img_r));% Resizes the image
 
 %TRANSFORMING IMAGES TO GRAY SCALE
-%TARGET IMAGES:
-It2=rgb2gray(img_t2);
-It= rgb2gray(img_t); %Target image
 %REFERENCE IMAGES:
 Ir=rgb2gray(img_r); 
 Ir2=rgb2gray(img_r2);
@@ -32,6 +29,14 @@ Ir3=rgb2gray(img_r3);
 Ir4=rgb2gray(img_r4);
 Ir5=rgb2gray(img_r5);
 Ir6=rgb2gray(img_r6);
+%TARGET IMAGES:
+It= rgb2gray(img_t); %Target image
+It2=rgb2gray(img_t2);
+
+%SHOW IMAGES
+figure(1);subplot(3,3,1);imshow(Ir);subplot(3,3,2);imshow(Ir2);subplot(3,3,3);imshow(Ir3);sgtitle('References and target(Center)');
+subplot(3,3,4);imshow(Ir4);subplot(3,3,6);imshow(Ir5);subplot(3,3,8);imshow(Ir6);subplot(3,3,5);imshow(It);
+
 
 %FT OF TARGET AND REFERENCES
 %Target
@@ -62,5 +67,5 @@ C=ifftshift(c);% Shift the result
 pos1 = [0.25 0.44 0.5 0.5];
 pos2 = [0.4 0.04 0.3 0.3]; %[left bottom width height]
 
-figure(1);subplot('position',pos1);mesh(log(1+abs(C)));colormap(jet);title('shifted Correlation')
+figure(2);subplot('position',pos1);mesh(log(1+abs(C)));colormap(jet);title('shifted Correlation')
 subplot('position',pos2); imagesc(log(1+abs(C)));colormap(jet); colorbar;  

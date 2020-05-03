@@ -50,3 +50,9 @@ pos2 = [0.4 0.04 0.3 0.3]; %[left bottom width height]
 
 figure(2);subplot('position',pos1);mesh(log(1+abs(C)));colormap(jet);title('shifted Correlation')
 subplot('position',pos2); imagesc(log(1+abs(C)));colormap(jet); colorbar; 
+
+%PCE (Peak to correlation energy is defined as the energy of the peak correlation
+%normalized to the total energy of the correlation plane
+
+%NOW: the instead of energy for this case would be given by |g|^2 where g is the respective function.
+%PCE=(\nsum_{i,j}^{N} E_{peak}(i,j))/(\nsum_{i,j}^{M} E_plane(i,j))
