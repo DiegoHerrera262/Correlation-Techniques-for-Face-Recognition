@@ -2,19 +2,26 @@
 % Date : 24 - 04 - 20
 % Author: Diego Alejandro Herrera
 % Description: This program takes pictures from webcam, and saves them in a
-%              folder in the currend address.
+%              folder in the currend address. Rectangle mus have the
+%              following format [xsupleft,ysupleft,width,height]
 
 function acquire_data(num_samples,cam,rectange,dirname)
+    clear y;
     % This sets the direction for image saving
     mkdir(dirname)
     basedir = pwd();
     address = [basedir '/' dirname '/' 'sample'];
-    % This for loop captures snapshots and saves suitedly cropped images
-    for i = 1:num_samples
-        where = [address num2str(i) '.png'];
+    i = 1;
+    % This for while captures snapshots and saves suitedly cropped images
+    while i < num_samples
         img = snapshot(cam);
-        % imshow(insertShape(img,'Rectangle',rectange,'LineWidth',5));
-        data_img = imcrop(img,rectange);
-        imwrite(data_img,where);
+        imshow(insertShape(img,'Rectangle',rectange,'LineWidth',5));
+        y = input('Ready to take sample? (1/0): ');
+        if y == 1
+            where = [address num2str(i) '.png'];
+            data_img = imcrop(img,rectange);
+            imwrite(data_img,where);
+            i = i+1;
+        end
     end
 end
