@@ -25,7 +25,7 @@ while(t <= 30)
 
     % Convolve image with filter
     fft_target = fftshift(fft2(target));
-    fft_cor = filter .* fft_target;
+    fft_cor = conj(filter) .* fft_target;
     % Careful with fftshift
     cor = ifft2(fft_cor);
 
