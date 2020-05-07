@@ -10,7 +10,7 @@ clear all; close all; clc;
 
 %% 1 Sample MACE Filter
 % Read sample image
-h = rgb2gray(imread('Diego/Sample100.png'));
+h = rgb2gray(imread('Diego/Sample50.png'));
 orgsize = size(h);
 h = fft2(h);
 h = h(:);
@@ -21,8 +21,12 @@ iDX = ((1.0 ./ abs(h).^2) .* h);
 M = iDX / (conj(h') * iDX);
 M = reshape(M,orgsize);
 
+%% Full Data MACE Filter
+Filter = load('filters/Diego_filter.mat');
+Filter = Filter.filter;
+
 %% Load Sample Image
-sample = rgb2gray(imread('Diego/sample100.png'));
+sample = rgb2gray(imread('Diego/sample50.png'));
 fft_sample = fft2(sample);
 
 %% Compute correlation
@@ -30,17 +34,21 @@ fft_cor = sqrt(conj(fft_sample) .* fft_sample);
 cor = abs(fftshift(ifft2(fft_cor)));
 fft_cor1 = sqrt(conj(M) .* fft_sample);
 cor1 = abs(fftshift(ifft2(fft_cor1)));
+tic;
+fft_cor2 = sqrt(conj(Filter) .* fft_sample);
+cor2 = abs(fftshift(ifft2(fft_cor2)));
+t = toc;
 
 %% Display correlation, sample image  & filter
-subplot(2,2,2);
-imshow(img,[]);
-title('Reference Image - With resize')
 subplot(2,2,1);
-imshow(sample,[]);
+imshow(img,[]);
 title('Reference Image')
+subplot(2,2,2);
+surf(cor)
+title('Selfcorrelation')
 subplot(2,2,3);
-surf(cor);
-title('Correlation Output - No resize')
-subplot(2,2,4);
 surf(cor1);
-title('Correlation Output - With MACE')
+title('Correlation Output - With 1 Smp. MACE')
+subplot(2,2,4);
+surf(cor2);
+title('Correlation Output - With Full MACE')
