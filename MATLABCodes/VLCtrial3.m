@@ -1,4 +1,4 @@
-%VLC CORRELATOR SIMPLE SIMULATION 3 -LUIS CARLOS DURAN
+%VLC CORRELATOR SIMPLE SIMULATION 3 -LUIS CARLOS DURAN N.
 %Date: 03-05-2020
 %This code calculates and shows the result of the correlation function
 %between a target and a reference image, using the method of a VLC type architecture and multiple references.
