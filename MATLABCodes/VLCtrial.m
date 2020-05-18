@@ -2,6 +2,7 @@
 %Date: 28-04-2020
 %This code calculates and shows the result of the correlation function
 %between a target image and a single reference image, using the method of a VLC type architecture.
+%PHASE ONLY FILTER IS USED
 clear all;
 close all;
 clf;
