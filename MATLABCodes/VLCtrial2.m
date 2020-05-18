@@ -3,7 +3,7 @@
 %This code calculates and shows the result of the correlation function
 %between a target and a reference image, using the method of a VLC type architecture.
 %and a COMPOSITE FILTER prototype and multiple references
-%The coeficients are chosen in an arbitrary way
+%The coeficients are chosen in an arbitrary way.
 clear all;
 close all;
 clf;
