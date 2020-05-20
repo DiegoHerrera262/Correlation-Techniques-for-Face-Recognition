@@ -4,14 +4,14 @@
 % Description: This program takes sample pictures and computes a MACE
 %              filter using matrix multiplication as in references.
 
-function MACE_Filter(dirname)
+function MACE_Filter(dirname,m,n)
     %% Establish location of images
     basedir = pwd();
     images = dir([basedir '/' dirname]);
     filename = [basedir '/' dirname '/' images(3).name];
     
     %% Read image for size reference for filter
-    im = fftshift(fft2(rgb2gray(imread(filename))));
+    im = fftshift(fft2(rgb2gray(imread(filename)),m,n));
     % original size
     orsize = size(im);
     % Matrix with images in Fourier Space
@@ -28,7 +28,7 @@ function MACE_Filter(dirname)
     for i = 3:numel(images)
         % Read image from directory
         filename = [basedir '/' dirname '/' images(i).name];
-        im = fftshift(fft2(rgb2gray(imread(filename))));
+        im = fftshift(fft2(rgb2gray(imread(filename)),m,n));
         % Update matrix of images
         X(:,i-2) = im(:);
         % Update Power Spectra Matrix
