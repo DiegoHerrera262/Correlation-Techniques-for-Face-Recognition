@@ -2,10 +2,10 @@
 
 In this Repo you will find documentation of the process of exploring correlation filters and Fourier transforms to identify a human face using advanced correlation techniques. It is a project developed for the course on Optics and Acoustics from the National University of Colombia. It is carried out by:
 
-* Diego Alejandro Herrera rojas
-* Luis Neme
-* Andrés Duque
-* Juan Manuel Moreno
+* Diego Alejandro Herrera Rojas
+* Luis Carlos Duran Neme
+* Andrés Felipe Duque Bran
+* Nicolás Alejandro Ávila Pérez
 
 ## Description
 
@@ -23,7 +23,7 @@ The project contains the following folders:
 
 In order to keep track of the work, the following formats are proposed for committing files to the repository:
 
-* All code files must me in a directory with the name **(Language)Codes**. For instance, if the codes are in MATLAB, they must be in the directory **MATLABCodes**.
+* All code files must be in a directory with the name **(Language)Codes**. For instance, if the codes are in MATLAB, they must be in the directory **MATLABCodes**.
 
 * All code files must have a heading that includes: 1) Descriptive title, 2) Author's name, 3) Date of deploy, 4) Brief description. Codes must be accurately commented so that anyone can understand them.
 
