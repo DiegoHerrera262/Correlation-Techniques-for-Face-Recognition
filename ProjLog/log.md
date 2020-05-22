@@ -128,3 +128,46 @@ Some remarks must be made to this function:
 ## Documentation of the Project
 
 To this date, Diego has ben a bit careless and sparse with his work. He was not quite aware of the importance of preprocessing training images, and did not care about a training algorithm for improving performance. He was aware of output normalization, and was expecting to apply a particular metric to the correlation output. He set up a meeting with one of his coworkers and they resolved to organize the project board on the Github repo. It must contain the general tasks defined on 16/05/20. Also, all weekly tasks must be added with the label *help needed* as an issue. The idea is that the work be more collaborative and to enhance group interaction. Also, all members of the group will have an individual log to document their work, and the general documentation of the project is to be registered in the wiki page.
+
+**Date:** 22/05/20
+
+## Normalization as Preprocessing Technique
+
+Diego decided to create a function for automate MACE crosscorrelation computation. The main objective is to create more compact code. This function is in the file **MACExcorr.m**. The function uses DFT for computations:
+
+```Matlab
+function corplane = MACExcorr(test_im,filtername)
+    %% Read MACE Filter from directory
+    Filter = load(['filters/' filtername '.mat']);
+    Filter = Filter.filter;
+
+    %% Compute Correlation
+    fft_test_im = fft2(test_im);
+    fft_cor = sqrt(fft_test_im .* conj(Filter));
+    corplane = abs(fftshift(ifft2(fft_cor)));
+end
+```
+
+It is important to update documentation of the codes and the particular conventions for the correct usage of the functions. Also, I noted that the cropping of the training image can be done more focused on the face, inn order to avoid influence of the background. I then included the normalization in the computation of the filter:
+
+```Matlab
+%% Generating matrixes for filter computation
+for i = 3:numel(images)
+    % Read image from directory
+    filename = [basedir '/' dirname '/' images(i).name];
+    im = normalize(double(rgb2gray(imread(filename))));
+    im = fftshift(fft2(im,m,n));
+    % Update matrix of images
+    X(:,i-2) = im(:);
+    % Update Power Spectra Matrix
+    P = P + im(:) .* conj(im(:)) * 1.0/(numel(images)-2);
+end
+```
+
+It obviously produced mistakes because ```normalize()``` acts on matrix columns. Hence, one must first convert it to vector, normalize, and then return to matrix form. After correcting that, turns out that the filter s still unable to correctly match Diego's face. Some possible problems are:
+
+* The data base is not correct, the face must be fitted in a better manner, avoiding background content.
+
+* Intensity conditions must be carefully chosen while acquiring training data. The filter is quite sensitive to intensity variations.
+
+* The computation of correlation must be revised. Perhaps the algorithm is not correct. Need to check correlation computation using DFT.

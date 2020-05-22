@@ -15,3 +15,5 @@ The following is the list of the programs written in the development of the proj
 **MATLABCodes/zeropadd.m**: Zero-padding of an image for fft computation. It is obsolete since fft2 function from MATLAB already carries that out.
 
 **MATLABCodes/ECPSDF.m**: Computes ECPSDF filter for correlation computation. Obsolete since MACE is more effective.
+
+**MATLABCodes/MACExcorr.M**: Computes xcorrelation of test image with MACE filter.

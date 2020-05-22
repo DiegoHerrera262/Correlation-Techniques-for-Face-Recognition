@@ -52,13 +52,13 @@ sample = imresize(rgb2gray(imcrop(scene,rect)),orgsize);
 fft_sample = fft2(sample);
 
 %% Compute correlation
-fft_cor = sqrt(conj(fft2(img)) .* fft_sample);
+fft_cor = abs(conj(fft2(img)) .* fft_sample);
 cor = abs(fftshift(ifft2(fft_cor)));
-fft_cor1 = sqrt(conj(M) .* fft_sample);
+fft_cor1 = abs(conj(M) .* fft_sample);
 cor1 = abs(fftshift(ifft2(fft_cor1)));
 tic;
-fft_cor2 = sqrt(conj(Filter) .* fft_sample);
-cor2 = abs(fftshift(ifft2(fft_cor2)));
+% fft_cor2 = sqrt(conj(Filter) .* fft_sample);
+cor2 = MACExcorr(sample,'Diego');
 t = toc;
 
 %% Display correlation, sample image  & filter
