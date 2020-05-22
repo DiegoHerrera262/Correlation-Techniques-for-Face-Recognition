@@ -10,7 +10,7 @@ clear all; close all; clc;
 
 %% 1 Sample MACE Filter
 % Read sample image
-h = rgb2gray(imread('Diego/Sample50.png'));
+h = rgb2gray(imread('Diego/Sample10.png'));
 orgsize = size(h);
 h = fft2(h);
 h = h(:);
@@ -35,7 +35,7 @@ x0 = int16(scsize(2)/2) - int16(orgsize(2)/2);
 y0 = 0;
 rect = [x0, y0, orgsize(2), orgsize(1)];
 %% Show Image for scene capture
-textPos = [3*scsize(2)/8 6*scsize(2)/8];
+textPos = [0 0];
 t = 0;
 tic
 while t <= 20
@@ -43,7 +43,7 @@ while t <= 20
     text = num2str(t,'%0.2f');
     scene = snapshot(cam);
     scene = insertShape(scene,'Rectangle',rect,'LineWidth',5);
-    scene = insertText(scene,textPos,text);
+    scene = insertText(scene,textPos,text,'FontSize',32);
     imshow(scene);
 end
 
