@@ -1,0 +1,5 @@
+MATLAB codes **Data_From_Video.m**, **Detect_Face.m** and **Original_Detect.m** are include in this folder.
+
+ **Data_From_Video.m** extracts frames from a selelected video and saves them in the folder **'Frames'**. As an example, I used an interview found on YouTube's url: https://www.youtube.com/watch?v=y214JRLbT4M, which I called **'Entrevista.mov'** and an spacing of 50 frames.
+
+ **Detect_Face.m** detects faces from images in a folder and saves them into a new folder called **'Faces'**. As an example, I used images from 'Frames'. There ir a problem with **imcrop** function in  **Detect_Face**: it does not work when more than one face is detected as shown in **'Error.png'**. That's why i had to cut a portion of the recorded screen: I included a picture of the original interview, called **'Original_Interview'**. The code for face recognition was taken from the url: https://es.mathworks.com/help/vision/examples/face-detection-and-tracking-using-camshift.html and I have included the origianl code as **Original_Detect.m**.
