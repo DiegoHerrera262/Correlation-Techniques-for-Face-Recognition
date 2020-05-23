@@ -17,3 +17,7 @@ The following is the list of the programs written in the development of the proj
 **MATLABCodes/ECPSDF.m**: Computes ECPSDF filter for correlation computation. Obsolete since MACE is more effective.
 
 **MATLABCodes/MACExcorr.M**: Computes xcorrelation of test image with MACE filter.
+
+**Data_from_video.m**: Extrae imágenes de un video en función del espaciamiento entre ellas.
+
+**detect_face**: Detecta y recorta rostros dentro de las imágenes.
