@@ -1,7 +1,7 @@
 % Program that detetcs a face within an image named 'filename'.
 % Date : 23 - 05 - 20
 % Adapted by: Nicolás Alejandro Ávila
-% Description: This program was adapted from an existing one on the
+% Description: This program was adapted from an existing one ('original_detection') on the
 % internet. The original one just detects a face in a frame and draws
 % an bounding box. This one extracts images from 'dirname' and saves the
 % detected faces in 'Faces' directory.
