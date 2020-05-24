@@ -8,24 +8,12 @@
 %% Clear workspace
 clear all; close all; clc;
 
-%% 1 Sample MACE Filter
-% Read sample image
-h = rgb2gray(imread('Diego/Sample10.png'));
-orgsize = size(h);
-h = fft2(h);
-h = h(:);
-img = reshape(h,orgsize);
-img = ifft2(img);
-% Compute MACE Filter
-iDX = ((1.0 ./ abs(h).^2) .* h);
-M = iDX / (conj(h') * iDX);
-M = reshape(M,orgsize);
+%% Read template image
+im1 = double(rgb2gray(imread('Diego/sample1.png')));
+fftim1 = fft2(im1);
+orgsize = size(im1);
 
-%% Full Data MACE Filter
-Filter = load('filters/Diego_filter.mat');
-Filter = Filter.filter;
-
-%% Load Sample Image
+%% Read test image
 % Read scene image from webcam
 cam = webcam(2);
 scene = snapshot(cam);
@@ -34,7 +22,7 @@ scsize = size(rgb2gray(scene));
 x0 = int16(scsize(2)/2) - int16(orgsize(2)/2);
 y0 = 0;
 rect = [x0, y0, orgsize(2), orgsize(1)];
-%% Show Image for scene capture
+% Show Image for scene capture
 textPos = [0 0];
 t = 0;
 tic
@@ -46,34 +34,30 @@ while t <= 20
     scene = insertText(scene,textPos,text,'FontSize',32);
     imshow(scene);
 end
-
-%% Crop image
+% Crop image
 sample = imresize(rgb2gray(imcrop(scene,rect)),orgsize);
 fft_sample = fft2(sample);
 
-%% Compute correlation
-fft_cor = abs(conj(fft2(img)) .* fft_sample);
-cor = abs(fftshift(ifft2(fft_cor)));
-fft_cor1 = abs(conj(M) .* fft_sample);
-cor1 = abs(fftshift(ifft2(fft_cor1)));
-tic;
-% fft_cor2 = sqrt(conj(Filter) .* fft_sample);
-cor2 = MACExcorr(sample,'Diego');
-t = toc;
+%% Computation of 1-Sample MACE
+x = fftim1(:);                  % Column vector with image
+D = x .* conj(x);               % Average Spectrum
+iDx = x .* (1.0 ./ D);          % D^{-1}X
+MACE = iDx / (conj(x') * iDx);  % MACE Filter formula
+% Resize for correlation computation
+MACE = reshape(MACE,orgsize(1),orgsize(2));
 
-%% Display correlation, sample image  & filter
-subplot(2,3,1);
-imshow(sample,[]);
-title('Test Image')
-subplot(2,3,3);
-imshow(img,[]);
-title('Sample Image')
-subplot(2,3,4);
-surf(cor)
-title('Crosscorrelation')
-subplot(2,3,5);
-surf(cor1);
-title('Correlation Output - With 1 Smp. MACE')
-subplot(2,3,6);
-surf(cor2);
-title('Correlation Output - With Full MACE')
+%% Correlation using fft
+% Different "correlations"
+selfcorA = abs(fftshift(...
+    ifft2(conj(fftim1) .* fft_sample)));
+selfcorB = abs(fftshift(...
+    ifft2(sqrt(conj(fftim1) .* fft_sample))));
+selfcorC = abs(fftshift(...
+    ifft2(conj(MACE) .* fft_sample)));
+selfcorD = MACExcorr(sample,'Diego');
+
+%% Show Self Correlation
+subplot(2,2,1); surf(selfcorA); title('Real Definition');
+subplot(2,2,2); surf(selfcorB); title('Using sqrt');
+subplot(2,2,3); surf(selfcorC); title('Using 1-samp MACE');
+subplot(2,2,4); surf(selfcorD); title('Using full MACE');

@@ -10,6 +10,6 @@ function corplane = MACExcorr(test_im,filtername)
     testim = reshape(normalize(testim),s(1),s(2));
     % Compute correlation
     fft_testim = fft2(testim);
-    fft_cor = sqrt(fft_testim .* conj(Filter));
+    fft_cor = fft_testim .* conj(Filter);
     corplane = abs(fftshift(ifft2(fft_cor)));
 end
