@@ -61,7 +61,8 @@ Giving this results, i repeated them in an identical manner but performing the n
 
 A conlusion to all this would be that either one has to asign manually the new intensity values or to focus more on the improvment of the image taking process.
 I tried to add the new intensity values by myself using  imadjust(I,[low_in high_in]), which allowed me to put values between 0 and 1. I implemented this new form for intensity adjustment for all options i propose today, resulting in a new option, the best at the moment, described as follows:
-Use im2doulble and normalization function imediatly after gray scaling, then use the adjustment function with values [] and finally perform a new normalization. This method gave for most cases a shorter peak, however the noise was lower as well.
+
+Use im2doulble and normalization function imediatly after gray scaling, then use the adjustment function with values [0.07 0.2] and finally perform a new normalization. This method gave for most cases a shorter peak, however the noise was lower as well.
 Bellow there're two examples: one where this method gave really good results and other where the results were no so good but defenetly better compared to its previous version in terms of noise and peak sharpness (even though it might be shorter). 
    
 Gray sacale picture | Normalized Image  
