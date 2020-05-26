@@ -4,7 +4,7 @@
 % Description: This program extracts frames from a video with an specific
 % spacing as a firt attempt for Data Acquisition Automation. That is, it
 % takes a video names 'video_name' and saves every 'spacing' frames. For
-% example, if spacing = 5, it will save frames numer 5, 10, 15, etc.
+% example, if spacing = 5, it will save frames number 1, 5, 10, 15, etc.
 
 function acquire_from_video(spacing, video_name)
 
@@ -17,7 +17,7 @@ vidfram = vidObj.NumberOfFrames;
 OutImgDir = 'Frames';
  mkdir(OutImgDir);
 
-i = spacing;
+i = 1;
 while i <= vidfram
     
     %Read the first frame to be taken.
