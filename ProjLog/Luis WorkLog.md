@@ -81,7 +81,7 @@ Intensity adjustment | Renormalized Image
 
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/NewNormGood.png)
 
-Finally, i noticed that most of the pictures that give better results are those in which my hair covers my forehead. These type of images represent the mayority of the reference set, which could be something to take into account. Futhermore, when the test image is not one of the references, results are bad still.
+Finally, i noticed that most of the pictures that give better results are those in which my hair covers my forehead. These type of images represent the mayority of the reference set, which could be something to take into account. Futhermore, when the test image is not one of the references, results are bad still. The last code structure used today was uploaded by the name "VLCfaceBetter3"
 
 
 ## MAY 27th 2020
