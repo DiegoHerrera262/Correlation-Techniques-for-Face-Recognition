@@ -83,10 +83,11 @@ Intensity adjustment | Renormalized Image
 
 Finally, i noticed that most of the pictures that give better results are those in which my hair covers my forehead. These type of images represent the mayority of the reference set, which could be something to take into account. Futhermore, when the test image is not one of the references, results are bad still. The last code structure used today was uploaded by the name "VLCfaceBetter3"
 
-
+***
 ## MAY 27th 2020
 Today a new trial was made, following the last method used, i tried using the negative of the image to calcultate the correlation. To obtain the negative image, the function 	"imcomplement" was used, and for the code it was applyied after renormalization which in general gives a brighter peak, but with a little increase in noise and for those cases where the results have been good, it also gives a higher peak. For the target images that have been giving bad results, the peak seems to be higher but it's not very noticible and the noise remains parcticly the same, in some cases even a little noisier. At the end, a suggestion to use the edge function was made. The function helps to detect edges on an image by returning a binarize image highlighting the detected borders, it also can be implemented with various  recognition methods. 
 
+***
 ## MAY 29th 2020
 Today i implemented the edge function (inmediatly afrter using "imcomplement") which in general gives really good results, decreasing the noise in most cases and giving bright peaks. For the implementation, three edge detection methods were performed  'canny', 'sobel' and 'log', where the latter proves to have a better performance in comparison. Therefore, as an example of an imput image with bad results and another with a good correlation plane we use the same ones as before.
 
@@ -103,3 +104,35 @@ Sobel edge detection | Log edge detection
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/sobelEdge_good.png)|  ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/logEdge_good.png)
 
 As mentioned above, the log method for edge detection gives really good results even for an image that used to cause problems in previous attempts. However, even though the noise is way much lower than before, the ideal result is to make it zero. The next suggested step is to implement a high pass filter as an image processing tool to highlight the edges in a better way. The code used today was uploaded by the name "VLCfaceBetter4"
+
+***
+## MAY 30th 2020
+Today i added a new function to the structure i had before, called "bwlabel" which works for a binary picture (hence it must be implemented after applying the log method edge detection) and gives a label matrix that contains labels for connected elements on the picture. In comparison, the subject image doesn't look too altered, but the correlation plane on the other hand certainly has a significant change. 
+In the correlation plane, the general results show a much higher peak in comparison to previous results, futhermore the noise on the plane is significantly attenuated and lower than the peak, which is definetly a good sign for the general performance. These results can be seen bellow. As always we show the examples for the same images (the "bad" and the "good" one):
+
+
+Input | Log edge detection | Log edge detection + label function 
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Input_edges_bad.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/logEdge_bad.png)| ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/logEdge_and_label_bad.png)
+
+Input | Log edge detection | Log edge detection + label function 
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Input_edges_good.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/logEdge_good.png)| ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/logEdge_and_label_good.png)
+
+As a final comment for this section, is fair to say this new function was added to the previous code so it was reuploaded with the same name "VLCfaceBetter4" to avoid an accummulation of many codes.
+
+For the second part of today's work, i took the firsts steps for future filter training 
+by adding a  new part to the code in order to calculate the test image self correlation, in order to observe how well is the performance of the filter. Hence, the self-correlation results for the two example images are shown bellow:
+
+
+Image | Self-Correlation
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Edge_and_label_ImageBad.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/SelfCorr_bad.png)
+
+Image | Self-Correlation
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Edge_and_label_ImageGood.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/SelfCorr_good.png)
+
+
+Based on these figures, one can see that the filter that's being implemented (plus the preprossecing done with normalizaton, edges and intensity adjustment) has a really good and reliable performance. This means, that noise problems are mostly due to a lack of filter traning or more image pre-processing methods. This code was uploaded by the name  "VLCfaceBetter_and_SelfCorr"
+
