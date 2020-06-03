@@ -2,7 +2,7 @@
 % Date : 24 - 04 - 20
 % Author: Diego Alejandro Herrera
 % Description: This program takes pictures from webcam, and saves them in a
-%              folder in the currend address. Rectangle mus have the
+%              folder in the currend address. Rectangle must have the
 %              following format [xsupleft,ysupleft,width,height]
 %              Suggested values width = 175, height = 207
 %                               xsupleft = 552, ysupleft = 0
