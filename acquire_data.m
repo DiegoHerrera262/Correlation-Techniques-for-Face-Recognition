@@ -1,9 +1,11 @@
-% Program that takes pictures and saves them in current directory
+%% Program that takes pictures and saves them in current directory
 % Date : 24 - 04 - 20
 % Author: Diego Alejandro Herrera
 % Description: This program takes pictures from webcam, and saves them in a
 %              folder in the currend address. Rectangle mus have the
 %              following format [xsupleft,ysupleft,width,height]
+%              Suggested values width = 175, height = 207
+%                               xsupleft = 552, ysupleft = 0
 
 function acquire_data(num_samples,cam,rectange,dirname)
     clear y;

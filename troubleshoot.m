@@ -9,7 +9,8 @@
 clear all; close all; clc;
 
 %% Read template image
-im1 = double(rgb2gray(imread('Diego/sample1.png')));
+im1 = rgb2gray(imread('Diego/sample1.png'));
+%im1 = EnhanceBorder(imread('Diego/sample1.png'),5);
 fftim1 = fft2(im1);
 orgsize = size(im1);
 
@@ -34,8 +35,8 @@ while t <= 20
     scene = insertText(scene,textPos,text,'FontSize',32);
     imshow(scene);
 end
-% Crop image
-sample = imresize(rgb2gray(imcrop(scene,rect)),orgsize);
+%% Crop image
+sample = imresize(EnhanceBorder(imcrop(scene,rect),5),orgsize);
 fft_sample = fft2(sample);
 
 %% Computation of 1-Sample MACE
@@ -49,15 +50,20 @@ MACE = reshape(MACE,orgsize(1),orgsize(2));
 %% Correlation using fft
 % Different "correlations"
 selfcorA = abs(fftshift(...
-    ifft2(conj(fftim1) .* fft_sample)));
+    ifft2(conj(fftim1) .* fftim1)));
 selfcorB = abs(fftshift(...
-    ifft2(sqrt(conj(fftim1) .* fft_sample))));
+    ifft2(sqrt(conj(fftim1) .* fftim1))));
 selfcorC = abs(fftshift(...
-    ifft2(conj(MACE) .* fft_sample)));
-selfcorD = MACExcorr(sample,'Diego');
+    ifft2(conj(MACE) .* fftim1)));
+selfcorD = MACExcorr(fftim1,'Diego');
 
+%% Show Image and Filter
+figure(1);
+subplot(2,1,1); imshow(sample,[]); title('Sample Image');
+subplot(2,1,2); imshow(im1,[]); title('Training Image');
 %% Show Self Correlation
+figure(2);
 subplot(2,2,1); surf(selfcorA); title('Real Definition');
-subplot(2,2,2); surf(selfcorB); title('Using sqrt');
+subplot(2,2,2); imshow(im1,[]); title('Training Image');
 subplot(2,2,3); surf(selfcorC); title('Using 1-samp MACE');
 subplot(2,2,4); surf(selfcorD); title('Using full MACE');

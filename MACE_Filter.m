@@ -1,17 +1,18 @@
-% Program that takes pictures and saves them in current directory
+%% Program that takes pictures and saves them in current directory
 % Date : 02 - 05 - 20
 % Author: Diego Alejandro Herrera
 % Description: This program takes sample pictures and computes a MACE
 %              filter using matrix multiplication as in references.
+%              Use m = 207, n = 176
 
 function MACE_Filter(dirname,m,n)
+    r = 5;
     %% Establish location of images
     basedir = pwd();
     images = dir([basedir '/' dirname]);
     filename = [basedir '/' dirname '/' images(3).name];
-    
     %% Read image for size reference for filter
-    im = fftshift(fft2(rgb2gray(imread(filename)),m,n));
+    im = fft2(EnhanceBorder(imread(filename),r),m,n);
     % original size
     orsize = size(im);
     % Matrix with images in Fourier Space
@@ -28,10 +29,11 @@ function MACE_Filter(dirname,m,n)
     for i = 3:numel(images)
         % Read image from directory
         filename = [basedir '/' dirname '/' images(i).name];
-        im = double(rgb2gray(imread(filename)));
+        % im = double(rgb2gray(imread(filename)));
+        im = EnhanceBorder(imread(filename),r);
         % Normalize Image
         s = size(im);
-        im = reshape(normalize(im(:)),s(1),s(2));
+        im = reshape(im(:),s(1),s(2));
         im = fftshift(fft2(im,m,n));
         % Update matrix of images
         X(:,i-2) = im(:);
