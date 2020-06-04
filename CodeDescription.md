@@ -22,8 +22,8 @@ The following is the list of the programs written in the development of the proj
 
 **detect_face**: Detecta y recorta rostros dentro de las imágenes.
 
-**enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
+**Preprocessing/enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
 
-**filter_images.m**: Aplica un filtro Wiener para suavizar los píxeles vecinos.
+**Preprocessing/filter_images.m**: Aplica un filtro Wiener para suavizar los píxeles vecinos.
 
-**correct_images.m**: Corrige errores a partir de la eliminación del fondo.
+**Preprocessing/correct_images.m**: Corrige errores a partir de la eliminación del fondo.
