@@ -25,3 +25,5 @@ The following is the list of the programs written in the development of the proj
 **enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
 
 **filter_images.m**: Aplica un filtro Wiener para suavizar los píxeles vecinos.
+
+**correct_images.m**: Corrige errores a partir de la eliminación del fondo.
