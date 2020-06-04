@@ -21,3 +21,5 @@ The following is the list of the programs written in the development of the proj
 **Data_from_video.m**: Extrae imágenes de un video en función del espaciamiento entre ellas.
 
 **detect_face**: Detecta y recorta rostros dentro de las imágenes.
+
+**Enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
