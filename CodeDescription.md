@@ -22,4 +22,6 @@ The following is the list of the programs written in the development of the proj
 
 **detect_face**: Detecta y recorta rostros dentro de las imágenes.
 
-**Enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
+**enhance_images.m**: Ajusta la calidad del contraste e iluminación de las imágenes.
+
+
