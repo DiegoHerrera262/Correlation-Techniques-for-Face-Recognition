@@ -164,3 +164,7 @@ Example 3|Example 4|
 The results confirm that the code and the BCOM filter are working properly when it comes to identify and compare the test image with the reference set, which also is a sign of relieve about the work done up until to this point.
 
 For part (2), as mentioned before i calculated the PCE and the PSE for all the impostor test images and plot them alongside the values acquire for 14 images from the reference set, obtaining the figures shown below:
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot1.png)
