@@ -136,7 +136,31 @@ Image | Self-Correlation
 
 Based on these figures, one can see that the filter that's being implemented (plus the preprossecing done with normalizaton, edges and intensity adjustment) has a really good and reliable performance. This means, that noise problems are mostly due to a lack of filter traning or more image pre-processing methods. This code was uploaded by the name  "VLCfaceBetter_and_SelfCorr"
 
+***
 ##  June 2nd 2020
 Today i made four new references sets, one with 95 sample and daylight as a source, the second one was made with 95 images and using 3pm sunlight as the source, the third set was made out of these last two, and finally the last set was constructed with 199 new photos and a normal bedroom light bulb as the source. The sets were named Sample3A, Sample3B, Sample3, Sample4 respectevly and the results obtained were very similar as before.
 
+***
+## June 4th 2020
+Today i started to perform calculations related to PSE and PCE values, as a criteria to determine the reliability of the correlation plane result. For this purpose, i had to create an "impostor set of images", that is a sample of images not belonging to the reference set which also differ drasticly from those pictures (like a football ball for example). The main objectives to achive with the described set are:
 
+1. To check the performance of the BCOM filter and the correlation plane for these impostor test images and to make sure that the code doesn't give any "false positive" on the correlation plane. Thus, proving that the code is working properly.
+
+2. To plot the PSE and PCE values obtained for each image from the impostor set and compare the results to those obtained with the actual reference set, which should be very distinguishable.
+
+As an additional note, remember that the calculations of the linear combination coeficients were done following a PCE criteria, which consisted in cumputing separated correlations (or as we named it "partial correlations") between each reference an the test image, followed by finding the peak energy for each one of these "partial correlations" and after dividing each of them by a "energy of the plane" value we obtained a PCE for each "partial correlation" which allowed us to calculated the respective weights for the linear combination filter.
+
+The note above is only to clarify that the PCE we're mentioning for ploting is completly different from those "partial correlations PCE's". This new PCE we're reffering to reprersents the peak to correlation energy from the actual correlation result obtained for a particular test image.   
+
+For these impostor test sample, i build a set of 14 images. Since the reference set is way bigger, for the plots we only used 14 samples form the "Sample 4" reference set.
+The results obtined for (1) were really good, as in all the cases tried, not a single one gave a "false positive", for most cases the result obtained in the correlation plane was just noise and in some others there was not even a correlation result (for images 2-8 and 13 specifically). Some of the obtained surfaces are shown bellow
+
+Example 1|Example 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor10.png)
+Example 3|Example 4|
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor13.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor14.png)
+
+The results confirm that the code and the BCOM filter are working properly when it comes to identify and compare the test image with the reference set, which also is a sign of relieve about the work done up until to this point.
+
+For part (2)
