@@ -8,7 +8,6 @@
 
 %% Clear Workspace
 clear all; close all; clc;
-colormap jet;
 
 %% Parameters of True Folder location
 curr_loc = pwd();                % Current MATLABPATH
@@ -32,7 +31,7 @@ Data = dir(folderLocation);      % Read data from folder
 Fake = dir(falseLocation);
 
 %% Read Template Image
-refimag = 7;
+refimag = 1;
 thereshold = 5;                  % For High Pass
 sigma = 0.4; alpha = 0.5;        % For Laplacian
 base = Data.folder;              % Because YOLO
@@ -59,7 +58,7 @@ MACE = reshape(MACE,orgsize(1),orgsize(2));
 corrplane = zeros(size(MACE));
 peakloc = zeros(numel(Data),2);
 psevals = zeros(numel(Data),1);
-randomNum = 9;
+randomNum = 12;
 figure(4);
 for k = 1:numel(Data)
     % Read training-test image
@@ -69,17 +68,19 @@ for k = 1:numel(Data)
 %         filename)),sigma,alpha);
 %     im = EnhanceBorder(imread(filename),thereshold);
     im = rgb2gray(imread(filename));
+    size(im)
     % Compute correlation
     corrplane = abs(fftshift(ifft2(...
         conj(MACE) .* fft2(im)...
         )));
+    size(corrplane)
     if k == refimag
-        subplot(2,3,2);
+        figure(4);
         surf(corrplane);
         title('Correlation output for reference');
     end
     if k == randomNum
-        subplot(2,3,4);
+        figure(3);
         surf(corrplane);
         title(['Correlation output for true sample ' ...
             num2str(randomNum)]);
@@ -94,7 +95,7 @@ end
 %% Compute PSE and Peak Location for False Data
 fake_peakloc = zeros(numel(Fake),2);
 fake_psevals = zeros(numel(Fake),1);
-fake_randomNum = 9;
+fake_randomNum = 12;
 for k = 1:numel(Fake)
     % Read training-test image
     filename = [base '/' Fake(k).name];
@@ -107,8 +108,9 @@ for k = 1:numel(Fake)
     corrplane = abs(fftshift(ifft2(...
         conj(MACE) .* fft2(im)...
         )));
+    size(corrplane)
     if k == fake_randomNum
-        subplot(2,3,6);
+        figure(6);
         surf(corrplane);
         title(['Correlation output for fake sample ' ...
             num2str(fake_randomNum)]);

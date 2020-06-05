@@ -12,7 +12,7 @@ function acquire_data(num_samples,cam,rectange,dirname)
     % This sets the direction for image saving
     mkdir(dirname)
     basedir = pwd();
-    address = [basedir '/' dirname '/' 'sample'];
+    address = [basedir '/' dirname '/' 'false'];
     i = 1;
     % This for while captures snapshots and saves suitedly cropped images
     while i < num_samples
