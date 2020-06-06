@@ -168,3 +168,17 @@ For part (2), as mentioned before i calculated the PCE and the PSE for all the i
 PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot1.png)
+***
+## JUNE 5th 2020
+Today i used a new impostor images set made off 14 faces from another parner from this project. Just as before, the idea was to calculate the PCE and PSE of the impostors and compare them against the values obtain for 14 reference samples, thus checking the BCOM filter performance and verifying that there are no "false positives". Therefore, some of the results obtained on the correlation plane are shown bellow.
+Example 1|Example 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_5.png)
+Example 3|Example 4|
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_10.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_14.png)
+
+As one can see, there is no false detection in any of the cases, the surface gives a lot of noise and disorganized peaks. Next, the plots obtained for PCE and PSE values are shown bellow.    
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot2.png)
