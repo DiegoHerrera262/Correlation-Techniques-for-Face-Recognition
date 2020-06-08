@@ -182,3 +182,19 @@ As one can see, there is no false detection in any of the cases, the surface giv
 PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot2.png)
+***
+## JUNE 7th-8th
+In these two days i continued working with impostor samples and comparing their results against those obtained for the reference set. Looking at the results obtained in previous days, we noticed that the PSE values were too small, so after doing some corrections to the PSE function we performed the proper calculations and ploting to a new impostor set of  40 images, thus getting to the following results.
+
+Example 1|Example 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_5.png)
+Example 3|Example 4|
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_10.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_35.png)
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot3.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot3.png)
+
+As one can see, once again there's no false detection in the correlation planes shown in the example (and neither for the rest), on the other hand we extended the number of samples to 40 in order to have a more data to analize.
+
