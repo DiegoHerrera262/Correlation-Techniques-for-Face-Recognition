@@ -183,8 +183,8 @@ PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot2.png)
 ***
-## JUNE 7th-8th
-In these two days i continued working with impostor samples and comparing their results against those obtained for the reference set. Looking at the results obtained in previous days, we noticed that the PSE values were too small, so after doing some corrections to the PSE function we performed the proper calculations and ploting to a new impostor set of  40 images, thus getting to the following results.
+## JUNE 7th-9th
+In these days i continued working with impostor samples and comparing their results against those obtained for the reference set. Looking at the results obtained in previous days, we noticed that the PSE values were too small, so after doing some corrections to the PSE function we performed the proper calculations and ploting to a new impostor set of  40 images, thus getting to the following results.
 
 Example 1|Example 2|
 :-------------------------:|:-------------------------:
@@ -196,5 +196,10 @@ PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot3.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot3.png)
 
-As one can see, once again there's no false detection in the correlation planes shown in the example (and neither for the rest), on the other hand we extended the number of samples to 40 in order to have a more data to analize.
+As one can see, once again there's no false detection in the correlation planes shown in the example (and neither for the rest), on the other hand we extended the number of samples to 40 in order to have a more data to analize. The code used to make these plots was uploaded by the name of PCE_and_PSE_plots. Also the code that calculates the PCE and PSE values was uploaded and named ImpostorSet_trials. Remember that this code calculates the PCE and PSE values of the total correlation plane when the test image is either an impostor or part of the reference set.
 
+As an additional work, i made a code that plots the PSE and PCE values of an image with a good correlation plane, changing the value of alpha, which is the constant used to compute the linear combination coeficients of the filter. An example of the figures obtained is shown below: 
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PCE_alpha.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PSE_alpha.png)
