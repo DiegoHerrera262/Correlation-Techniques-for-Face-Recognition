@@ -203,3 +203,32 @@ As an additional work, i made a code that plots the PSE and PCE values of an ima
 PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PCE_alpha.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PSE_alpha.png)
+
+***
+## JUNE 10th 2020
+Today, as a first part of the work, i added a new function to the preprocessing part of the code. 
+
+- adapthisteq: J = adapthisteq(I) enhances the contrast of the grayscale image I by transforming the values using contrast-limited adaptive histogram equalization.
+
+Hence, the new structure of preprocessing has this new element, which is displayed with the previous ones in the following way:
+
+It=rgb2gray(img_t);
+It=im2double(It);
+It=normalize(It);
+It=imadjust(It,[0.07 0.2]); 
+It= adapthisteq(It);
+It=normalize(It);
+It=imcomplement(It);
+It=edge(It,'log');
+It=bwlabel(It);   
+
+where img_t represents the original image read. Since now we have this new structure, it leads to certain changes in the codes and results we've been obtaining. Therefore, the code that calculates the correlation plane and the self correlation of an image that DOES belong to the reference set is now called VLCface_and_SelfCorr_NEW_BETTER. Likewise, the code that calculates the PCE and PSE values for the total correlation plane of eeither an actual reference or an impostor is now called ImpostorSet_trials_NEW. For the last one, it is observed that the PCE and PSE  values change, increasing for the real images and decreasining for the impostors. Thus, thsese new plots are shown bellow:   
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)
+
+
+
+In the plots code i also added a calculation for the mean and standard deviation of the PCE and PSE values in order to create a region of acceptance that confirms a successful match, another that dictates no match and a final one that gives no conclusive result.
+
