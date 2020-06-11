@@ -226,7 +226,7 @@ where img_t represents the original image read. Since now we have this new struc
 
 PCE|PSE|
 :-------------------------:|:-------------------------:
-![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot4.png)
 
 
 
