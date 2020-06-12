@@ -222,13 +222,95 @@ It=imcomplement(It);
 It=edge(It,'log');
 It=bwlabel(It);   
 
-where img_t represents the original image read. Since now we have this new structure, it leads to certain changes in the codes and results we've been obtaining. Therefore, the code that calculates the correlation plane and the self correlation of an image that DOES belong to the reference set is now called VLCface_and_SelfCorr_NEW_BETTER. Likewise, the code that calculates the PCE and PSE values for the total correlation plane of eeither an actual reference or an impostor is now called ImpostorSet_trials_NEW. For the last one, it is observed that the PCE and PSE  values change, increasing for the real images and decreasining for the impostors. Thus, thsese new plots are shown bellow:   
+Where img_t represents the original image read. Since now we have this new structure, it leads to certain changes in the codes and results we've been obtaining. Likewise,  it is observed that the PCE and PSE  values change, increasing for the real images and decreasining for the impostors. Thus, thsese new plots are shown bellow:   
 
 PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot4.png)
 
 
-
 In the plots code i also added a calculation for the mean and standard deviation of the PCE and PSE values in order to create a region of acceptance that confirms a successful match, another that dictates no match and a final one that gives no conclusive result.
+
+***
+## JUNE 11 2020
+Today, i used a new structure for the preprocessing part of the code in order to have three types of results for the correlation planes and the PCE and PSE plots, thus deciding which of these structures has a better performance. The mentioned structures are the one we've be using the past few weeks, the second is the one shown yesterday and  lastly, the third one is as follows:
+
+It=rgb2gray(img_t);
+se = strel('disk',70);
+background = imopen(It,se);
+It = It - background;
+It= wiener2(It,[5 5]);
+It=im2double(It);
+It=normalize(It);
+It=imadjust(It,[0.07 0.2]); 
+It=histeq(It);
+It= adapthisteq(It);
+It=normalize(It);
+It=imcomplement(It);
+It=edge(It,'log');
+It=bwlabel(It);   
+
+Where the new elements implemented are:
+
+- strel: strel('disk',r,n) creates a disk-shaped structuring element, where r specifies the radius and n specifies the number of line structuring elements used to approximate the disk shape. 
+- imopen:  imopen(I,SE) performs morphological opening on the grayscale or binary image I, returning the opened image. The morphological open operation is an erosion followed by a dilation, using the same structuring element for both operations.
+- wiener2: wiener2(I,[m n],noise) filters the grayscale image I using a pixel-wise adaptive low-pass Wiener filter. [m n] specifies the size (m-by-n) of the neighborhood used to estimate the local image mean and standard deviation. The additive noise (Gaussian white noise) power is assumed to be noise.
+- J= histeq(I):  Transforms the grayscale image I so that the histogram of the output grayscale image J has 64 bins and is approximately flat.
+
+For the new structure, the PCE and PSE plots are:
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot5.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot5.png)
+
+This code also includes the calculations for the mean and the standard deviation of the data. At the end, we chose the PSE as the ultimate criteria to decide weather there's a match in the plane or not. Therefore, the next step is to compare the results obtained for the three types of preprocessing structures used, but before that, keep in mind that the 40 images we've been using to plot those values, belong to the 198 samples reference set. Hence, the comparison between the plots is shown below:
+
+PSE (Preprocessing 1)|PSE (Preprocessing 2)|PSE (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot3.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot5.png)
+
+
+For the first type of preprocessing we have the following values:
+
+- True PSE mean= 11.8011
+- True PSE STD= 1.5893
+- False PSE mean= 5.5558
+- False PSE STD = 0.6629
+
+Which would imply that the acceptance region lies between the PSE values of 10.2118 and 13.3904, and the no match region is from 4.8929 to 6.2187. Therefore, the distance between regions is 3.9934
+
+For the second type:
+
+- True PSE mean= 11.8065
+- True PSE STD= 1.4954
+- False PSE mean= 5.4210
+- False PSE STD = 0.7022
+Match region = [10.3111,13.3019], No Match region = [4.7188,6.1232], distance between regions is 4.1879
+
+For the third type:
+
+- True PSE mean= 11.3762
+- True PSE STD= 2.0286
+- False PSE mean= 5.5817
+- False PSE STD = 0.6014
+Match region = [9.3476,13.4048], No Match region = [4.9803,6.1831], distance between regions is 3.1645.
+
+As a final way to compare these three ways to perform the image preprocessing, we take a look to the correlation planes of images with a high, a low and a PSE close to the average, thus obtaining the following results:
+
+CORRELATION FOR HIGH PSE:
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_3.png)
+
+CORRELATION FOR AVERAGE PSE:
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_3.png)
+
+CORRELATION FOR LOW PSE:
+
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_3.png)
+
 
