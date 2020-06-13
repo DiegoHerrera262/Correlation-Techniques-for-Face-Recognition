@@ -7,4 +7,4 @@ MATLAB codes **Data_From_Video.m**, **Detect_Face.m**, **Number_Of_Frames.m** an
  **Number_Of_Frames.m** prints the number of frames of a given video file, 'video_name'. Its purpose is to give an idea of an ideal spacing to use in 
  **Data_From_Video.m**.
 
- Images obtained by this method can be used to synthesize filters for face recognition. It would be interesting to use this with videos of the group members.
+ Images obtained by this method can be used to synthesize filters for face recognition. It would be interesting to use this with videos of the group members. A second application of  **Detect_Face.m** on 'Faces' images seems to decrease the background effect on the face detection. However, some mistakes like double detection or nule detection appears. Acquiring data from live video seems to be a better solution.

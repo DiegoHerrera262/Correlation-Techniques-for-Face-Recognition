@@ -13,7 +13,7 @@ folder = dirname;
 Images = dir(fullfile(folder, '*.png'))
 
 %Setting direction for image saving.
-OutImgDir = 'Faces';
+OutImgDir = 'Faces2';
  mkdir(OutImgDir);
 
  %Loop for the images in 'dirname'.
