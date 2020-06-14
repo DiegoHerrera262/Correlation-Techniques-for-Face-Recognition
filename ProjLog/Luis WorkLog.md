@@ -313,8 +313,18 @@ Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preproc
 :-------------------------:|:-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_3.png)
 
+***
 
 ## JUNE 12th 2020
 
 According to the results described yesterday, we can conclude that, based on the separation between regions and quality of the correlation planes, the most appropriate pre-processing methods are either the first one or the second one. Therefore, it is necessary to analize other kinds of results obtained by both methods, thus our next step is to make a graph (for each type of pre-processing) that shows the behaviour of the images that belong to the actual reference set against the impostors. The graph we are going to make is called a Receiver operating characteristics (ROC) curve, in which one plots the true positive rate (TPR) against the false positive rate (FPR) for various threshold values. The TPR is the ratio between the events that are actually categorized as a successful match and the total number of samples expected to be positive. Likewise, the FPR is the ratio of false positives and the total number of impostors. Another form of a ROC curve is to graph the False negative rate (FNR), that is the ratio of true images clasified as no match, against the FPR. Since we have to use various threshold values, that means that we must use different variations of the acceptance and no match intervals. As a final note, we are going to perform the first plots only for the 40 impostor samples and the 40 references (that belong to a sample of 198) we've been using until now.
+
+***
+
+## JUNE 14th 2020   
+According to what's drescribed above, today a made the ROC curves for the two preprocessing approaches that we used. Since we had to use different theresholds, we constructed the acceptance and no match regions based on the mean and standard deviations from the real reference and impostor samples respectively. These regions or bands were  taken as: [mean-c*std,mean+c*std] where c is a constant and takes the values: 0.2-3.6 inreasing in steps of 0.2.
+
+To facilitate the counting of matches we added the regions to the PSE plots. One example for c=0.6 is shown bellow:
+
+As one can see, there's a region in the middle which we call the inconclusive region. On the other hand, is clear that the acceptance and no match regions are very distant from each other due to the low PSE values from the impostor set, which means that a false positive or false negative will hardly appear unless both regions are enlarged, but doing that would decrease the code's relaiabilty. Futhermore, the fact that there's almost no false positive in any case, has a significant effect on the ROC curves:
 
