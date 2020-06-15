@@ -323,8 +323,16 @@ According to the results described yesterday, we can conclude that, based on the
 
 ## JUNE 14th 2020   
 According to what's drescribed above, today a made the ROC curves for the two preprocessing approaches that we used. Since we had to use different theresholds, we constructed the acceptance and no match regions based on the mean and standard deviations from the real reference and impostor samples respectively. These regions or bands were  taken as: [mean-c*std,mean+c*std] where c is a constant and takes the values: 0.2-3.6 inreasing in steps of 0.2.
-
 To facilitate the counting of matches we added the regions to the PSE plots. One example for c=0.6 is shown bellow:
 
+PSE (Preprocessing 1)|PSE (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method1_PSE_plot_0.6.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method2_PSE_plot_0.6.png)
+
 As one can see, there's a region in the middle which we call the inconclusive region. On the other hand, is clear that the acceptance and no match regions are very distant from each other due to the low PSE values from the impostor set, which means that a false positive or false negative will hardly appear unless both regions are enlarged, but doing that would decrease the code's relaiabilty. Futhermore, the fact that there's almost no false positive in any case, has a significant effect on the ROC curves:
+
+
+ROC Curve (Preprocessing 1)|ROC Curve (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/ROC_curve_Method1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/ROC_curve_Method2.png)
 
