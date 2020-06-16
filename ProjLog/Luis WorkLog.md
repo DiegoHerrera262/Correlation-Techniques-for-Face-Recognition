@@ -338,3 +338,20 @@ ROC Curve (Preprocessing 1)|ROC Curve (Preprocessing 2)|
 
 Just as was said before, for almost all region variations there is no false positives in both preprocessing methods, therefore the FPR values on the ROC curve stay zero for the most part. Evidently, the fact that our impostor sample PSE values differ drasticly from the references is affecting the form of the curve, thus a new way of ploting this curve is proposed:
 The new idea is to only use the acceptance region, and everything outside from it has to be clasified as no match, thereafter plot a new curve as the TPR against the false negative rate (FNR), which is the ratio of true samples clasified as negative, divided by the total number of samples.       
+
+***
+
+## JUNE 15th 2020
+Just as we described yesterday, we plot a new type of ROC curve as the TPR against the FNR, which gives the following results:
+
+ROC Curve (Preprocessing 1)|ROC Curve (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_METHOD2.png)
+
+The behaviour of the curves above shows an inverse proportionality between both rates, which was a expected result since we took false negatives as every awaited positive outside the acceptance region. As an additonal set of plots we wanted to analize the relation between these values and the match interval size, thus we ploted the ratio FNR/TPR againts the region size. The describe curves are shown bellow:
+
+Preprocessing 1|Preprocessing 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD2.png)
+
+As one can see, the ratio gets closer to zero as the region size increases, meaning that FNR is also zero which is the ideal result. However, this "perfect" result is reached for a drasticly large acceptance region which is far from reliable, therefore we need to find an optimal value on the curve, which would gives us the appropiate region size. 
