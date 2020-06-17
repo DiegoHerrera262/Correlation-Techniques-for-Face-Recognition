@@ -8,19 +8,17 @@ function filter_images(dirname)
     %% Look for the images
     basedir = pwd();
     Path = strcat(basedir,'/',dirname);
-    images = dir(fullfile(Path,'*.png'));
+    images = dir(fullfile(Path,'*sample*.png'));
     %% Creates destination folder
     mkdir(strcat(basedir,'/',dirname,'_filtered'))
-    address = [basedir '/' dirname '_filtered/' 'filtered_sample'];
+    address = [basedir '/' dirname '_filtered/'];
     %% Filters each Image
     for k = 1:length(images)
         RGB = imread(strcat(Path,'/',images(k).name));
         I = rgb2gray(RGB);
         I2 = wiener2(I,[5 5]);
-        %figure
-        %title(strcat('Image ',num2str(k), ' with Noise Removed by Wiener Filter'));
         %% Save the image
-        where = [strcat(address,num2str(k),'.png')];
+        where = [address 'filtered_' images(k).name];
         imwrite(I2,where);
     end
 end
