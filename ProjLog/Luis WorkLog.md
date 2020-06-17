@@ -355,3 +355,12 @@ Preprocessing 1|Preprocessing 2|
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD2.png)
 
 As one can see, the ratio gets closer to zero as the region size increases, meaning that FNR is also zero which is the ideal result. However, this "perfect" result is reached for a drasticly large acceptance region which is far from reliable, therefore we need to find an optimal value on the curve, which would gives us the appropiate region size. Another observation worth making is that the graphs have an exponential-like form, which could be a characteristic to keep in mind to decide the propper region size.
+
+***
+
+## JUNE 16 2020
+Today i briefly tried to use once again the impostor sample approach, but this time i used as impostors a set of images  from the actual subject but with a different light  source to ilumnate the scene. However, the PSE values were just as low as the previous impostor set (a range of values between 4-7), which demonstrates that there's not really any use for an impostor set, because the filter already discards them, giving them a really low PSE value compared to the actual reference set, leaving almost no posibility to obtain a false positive just, as was happening yesterday. 
+
+As the second part of todays work, first is important to remember that the set of 40 real images we've been using throught these last few weeks, they all belong to the sample of 198 that form the BCOM filter. Now, what we're going to do is to take those 40 images out of the filter (so it would consist only on the remaining 158 which would be known as "Filter_Sample") in order to create a "Training_Sample" to test these new filter. All of this, is based on the premise that the filter must work for test images not belongiong to the filter itself, as long as the subjects and the scene characteristics between a test image and the references are the same. Therefore , since in this case both sets had the same scene illumination and properties, we should obtain acceptable results. 
+Hence, we performed the changes mentioned above and plot new graphs for the PSE values, ROC curves and FNR/TPR, using the new standadrs of acceptance region size and doing it for both preprocessing methods.    
+
