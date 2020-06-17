@@ -168,3 +168,199 @@ For part (2), as mentioned before i calculated the PCE and the PSE for all the i
 PCE|PSE|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot1.png)
+***
+## JUNE 5th 2020
+Today i used a new impostor images set made off 14 faces from another parner from this project. Just as before, the idea was to calculate the PCE and PSE of the impostors and compare them against the values obtain for 14 reference samples, thus checking the BCOM filter performance and verifying that there are no "false positives". Therefore, some of the results obtained on the correlation plane are shown bellow.
+Example 1|Example 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_5.png)
+Example 3|Example 4|
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_10.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor2_14.png)
+
+As one can see, there is no false detection in any of the cases, the surface gives a lot of noise and disorganized peaks. Next, the plots obtained for PCE and PSE values are shown bellow.    
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot2.png)
+***
+## JUNE 7th-9th
+In these days i continued working with impostor samples and comparing their results against those obtained for the reference set. Looking at the results obtained in previous days, we noticed that the PSE values were too small, so after doing some corrections to the PSE function we performed the proper calculations and ploting to a new impostor set of  40 images, thus getting to the following results.
+
+Example 1|Example 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_5.png)
+Example 3|Example 4|
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_10.png) |![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Impostor3_35.png)
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot3.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot3.png)
+
+As one can see, once again there's no false detection in the correlation planes shown in the example (and neither for the rest), on the other hand we extended the number of samples to 40 in order to have a more data to analize. The code used to make these plots was uploaded by the name of PCE_and_PSE_plots. Also the code that calculates the PCE and PSE values was uploaded and named ImpostorSet_trials. Remember that this code calculates the PCE and PSE values of the total correlation plane when the test image is either an impostor or part of the reference set.
+
+As an additional work, i made a code that plots the PSE and PCE values of an image with a good correlation plane, changing the value of alpha, which is the constant used to compute the linear combination coeficients of the filter. An example of the figures obtained is shown below: 
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PCE_alpha.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Sample4(40)_PSE_alpha.png)
+
+***
+## JUNE 10th 2020
+Today, as a first part of the work, i added a new function to the preprocessing part of the code. 
+
+- adapthisteq: J = adapthisteq(I) enhances the contrast of the grayscale image I by transforming the values using contrast-limited adaptive histogram equalization.
+
+Hence, the new structure of preprocessing has this new element, which is displayed with the previous ones in the following way:
+
+It=rgb2gray(img_t);
+It=im2double(It);
+It=normalize(It);
+It=imadjust(It,[0.07 0.2]); 
+It= adapthisteq(It);
+It=normalize(It);
+It=imcomplement(It);
+It=edge(It,'log');
+It=bwlabel(It);   
+
+Where img_t represents the original image read. Since now we have this new structure, it leads to certain changes in the codes and results we've been obtaining. Likewise,  it is observed that the PCE and PSE  values change, increasing for the real images and decreasining for the impostors. Thus, thsese new plots are shown bellow:   
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot4.png)
+
+
+In the plots code i also added a calculation for the mean and standard deviation of the PCE and PSE values in order to create a region of acceptance that confirms a successful match, another that dictates no match and a final one that gives no conclusive result.
+
+***
+## JUNE 11 2020
+Today, i used a new structure for the preprocessing part of the code in order to have three types of results for the correlation planes and the PCE and PSE plots, thus deciding which of these structures has a better performance. The mentioned structures are the one we've be using the past few weeks, the second is the one shown yesterday and  lastly, the third one is as follows:
+
+It=rgb2gray(img_t);
+se = strel('disk',70);
+background = imopen(It,se);
+It = It - background;
+It= wiener2(It,[5 5]);
+It=im2double(It);
+It=normalize(It);
+It=imadjust(It,[0.07 0.2]); 
+It=histeq(It);
+It= adapthisteq(It);
+It=normalize(It);
+It=imcomplement(It);
+It=edge(It,'log');
+It=bwlabel(It);   
+
+Where the new elements implemented are:
+
+- strel: strel('disk',r,n) creates a disk-shaped structuring element, where r specifies the radius and n specifies the number of line structuring elements used to approximate the disk shape. 
+- imopen:  imopen(I,SE) performs morphological opening on the grayscale or binary image I, returning the opened image. The morphological open operation is an erosion followed by a dilation, using the same structuring element for both operations.
+- wiener2: wiener2(I,[m n],noise) filters the grayscale image I using a pixel-wise adaptive low-pass Wiener filter. [m n] specifies the size (m-by-n) of the neighborhood used to estimate the local image mean and standard deviation. The additive noise (Gaussian white noise) power is assumed to be noise.
+- J= histeq(I):  Transforms the grayscale image I so that the histogram of the output grayscale image J has 64 bins and is approximately flat.
+
+For the new structure, the PCE and PSE plots are:
+
+PCE|PSE|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PCE_plot5.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot5.png)
+
+This code also includes the calculations for the mean and the standard deviation of the data. At the end, we chose the PSE as the ultimate criteria to decide weather there's a match in the plane or not. Therefore, the next step is to compare the results obtained for the three types of preprocessing structures used, but before that, keep in mind that the 40 images we've been using to plot those values, belong to the 198 samples reference set. Hence, the comparison between the plots is shown below:
+
+PSE (Preprocessing 1)|PSE (Preprocessing 2)|PSE (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot3.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot4.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/PSE_plot5.png)
+
+
+For the first type of preprocessing we have the following values:
+
+- True PSE mean= 11.8011
+- True PSE STD= 1.5893
+- False PSE mean= 5.5558
+- False PSE STD = 0.6629
+
+Which would imply that the acceptance region lies between the PSE values of 10.2118 and 13.3904, and the no match region is from 4.8929 to 6.2187. Therefore, the distance between regions is 3.9934
+
+For the second type:
+
+- True PSE mean= 11.8065
+- True PSE STD= 1.4954
+- False PSE mean= 5.4210
+- False PSE STD = 0.7022
+Match region = [10.3111,13.3019], No Match region = [4.7188,6.1232], distance between regions is 4.1879
+
+For the third type:
+
+- True PSE mean= 11.3762
+- True PSE STD= 2.0286
+- False PSE mean= 5.5817
+- False PSE STD = 0.6014
+Match region = [9.3476,13.4048], No Match region = [4.9803,6.1831], distance between regions is 3.1645.
+
+As a final way to compare these three ways to perform the image preprocessing, we take a look to the correlation planes of images with a high, a low and a PSE close to the average, thus obtaining the following results:
+
+CORRELATION FOR HIGH PSE:
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/HIGH_PSE_3.png)
+
+CORRELATION FOR AVERAGE PSE:
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/MIDDLE_PSE_3.png)
+
+CORRELATION FOR LOW PSE:
+
+Correlation (Preprocessing 1)|Correlation (Preprocessing 2)|Correlation (Preprocessing 3)|
+:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_2.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/LOW_PSE_3.png)
+
+***
+
+## JUNE 12th 2020
+
+According to the results described yesterday, we can conclude that, based on the separation between regions and quality of the correlation planes, the most appropriate pre-processing methods are either the first one or the second one. Therefore, it is necessary to analize other kinds of results obtained by both methods, thus our next step is to make a graph (for each type of pre-processing) that shows the behaviour of the images that belong to the actual reference set against the impostors. The graph we are going to make is called a Receiver operating characteristics (ROC) curve, in which one plots the true positive rate (TPR) against the false positive rate (FPR) for various threshold values. The TPR is the ratio between the events that are actually categorized as a successful match and the total number of samples expected to be positive. Likewise, the FPR is the ratio of false positives and the total number of impostors. Another form of a ROC curve is to graph the False negative rate (FNR), that is the ratio of true images clasified as no match, against the FPR. Since we have to use various threshold values, that means that we must use different variations of the acceptance and no match intervals. As a final note, we are going to perform the first plots only for the 40 impostor samples and the 40 references (that belong to a sample of 198) we've been using until now.
+
+***
+
+## JUNE 14th 2020   
+According to what's drescribed above, today a made the ROC curves for the two preprocessing approaches that we used. Since we had to use different theresholds, we constructed the acceptance and no match regions based on the mean and standard deviations from the real reference and impostor samples respectively. These regions or bands were  taken as: [mean-c*std,mean+c*std] where c is a constant and takes the values: 0.2-3.6 inreasing in steps of 0.2.
+To facilitate the counting of matches we added the regions to the PSE plots. One example for c=0.6 is shown bellow:
+
+PSE (Preprocessing 1)|PSE (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method1_PSE_plot_0.6.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method2_PSE_plot_0.6.png)
+
+As one can see, there's a region in the middle which we call the inconclusive region. On the other hand, is clear that the acceptance and no match regions are very distant from each other due to the low PSE values from the impostor set, which means that a false positive or false negative will hardly appear unless both regions are enlarged, but doing that would decrease the code's relaiabilty. Futhermore, the fact that there's almost no false positive in any case, has a significant effect on the ROC curves:
+
+
+ROC Curve (Preprocessing 1)|ROC Curve (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/ROC_curve_Method1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/ROC_curve_Method2.png)
+
+Just as was said before, for almost all region variations there is no false positives in both preprocessing methods, therefore the FPR values on the ROC curve stay zero for the most part. Evidently, the fact that our impostor sample PSE values differ drasticly from the references is affecting the form of the curve, thus a new way of ploting this curve is proposed:
+The new idea is to only use the acceptance region, and everything outside from it has to be clasified as no match, thereafter plot a new curve as the TPR against the false negative rate (FNR), which is the ratio of true samples clasified as negative, divided by the total number of samples.       
+
+***
+
+## JUNE 15th 2020
+Just as we described yesterday, we plot a new type of ROC curve as the TPR against the FNR, which gives the following results:
+
+ROC Curve (Preprocessing 1)|ROC Curve (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_METHOD2.png)
+
+The behaviour of the curves above shows an inverse proportionality between both rates, which was a expected result since we took false negatives as every awaited positive outside the acceptance region. As an additonal set of plots we wanted to analize the relation between these values and the match interval size, thus we ploted the ratio FNR/TPR againts the region size. The describe curves are shown bellow:
+
+Preprocessing 1|Preprocessing 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO_SIZE_METHOD2.png)
+
+As one can see, the ratio gets closer to zero as the region size increases, meaning that FNR is also zero which is the ideal result. However, this "perfect" result is reached for a drasticly large acceptance region which is far from reliable, therefore we need to find an optimal value on the curve, which would gives us the appropiate region size. Another observation worth making is that the graphs have an exponential-like form, which could be a characteristic to keep in mind to decide the propper region size.
+
+***
+
+## JUNE 16 2020
+Today i briefly tried to use once again the impostor sample approach, but this time i used as impostors a set of images  from the actual subject but with a different light  source to ilumnate the scene. However, the PSE values were just as low as the previous impostor set (a range of values between 4-7), which demonstrates that there's not really any use for an impostor set, because the filter already discards them, giving them a really low PSE value compared to the actual reference set, leaving almost no posibility to obtain a false positive just, as was happening yesterday. 
+
+As the second part of todays work, first is important to remember that the set of 40 real images we've been using throught these last few weeks, they all belong to the sample of 198 that form the BCOM filter. Now, what we're going to do is to take those 40 images out of the filter (so it would consist only on the remaining 158 which would be known as "Filter_Sample") in order to create a "Training_Sample" to test these new filter. All of this, is based on the premise that the filter must work for test images not belongiong to the filter itself, as long as the subjects and the scene characteristics between a test image and the references are the same. Therefore , since in this case both sets had the same scene illumination and properties, we should obtain acceptable results. 
+Hence, we performed the changes mentioned above and plot new graphs for the PSE values, ROC curves and FNR/TPR, using the new standadrs of acceptance region size and doing it for both preprocessing methods.    
+

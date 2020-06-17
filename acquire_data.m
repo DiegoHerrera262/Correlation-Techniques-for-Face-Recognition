@@ -16,24 +16,39 @@ function acquire_data(num_samples,cam,dirname,type)
     dims = split(resol,'x');
     w = str2double(cell2mat(dims(1)));
     h = str2double(cell2mat(dims(2)));
-    % Compute coordinates of region of interest
     width = uint16(0.2397*w); height = uint16(0.370*h);
-    xcorn = uint16(0.3640*w); ycorn = uint16(0.3253*h);
-    % Define rectangele vector
-    rectange = [xcorn, ycorn, width, height];
+    xcornLS = uint16(0.3640*w); ycornLS = uint16(0.3253*h);
+    
+    %% Compute coordinates of region of interest
+    % For the sqare border
+    xcornRS = xcornLS + width; ycornRS = ycornLS;
+    xcornRI = xcornLS + width; ycornRI = ycornLS + height;
+    xcornLI = xcornLS; ycornLI = ycornLS + height;
+    % For the target
+    xVlineS = uint16((xcornRS + xcornLS)/2);
+    yVlineS = ycornLS;
+    xVlineI = uint16((xcornRI + xcornLI)/2);
+    yVlineI = ycornLI;
+    yHlineS = uint16((ycornLS + ycornLI)/2);
+    xHlineS = xcornLS;
+    yHlineI = uint16((ycornRS + ycornRI)/2);
+    xHlineI = xcornRS;
+    
+    %% Define rectangle vector
+    rectange = [xcornLS, ycornLS, width, height];
     % Alignment lines
-    Vline = [xcorn + uint16(width/2) ycorn ...
-        xcorn + uint16(width/2) ycorn + height];
-    Hline = [xcorn ycorn + uint16(height/2) ...
-        xcorn + uint16(width)  ycorn + uint16(height/2)];
+    Vline = [xVlineS yVlineS xVlineI yVlineI];
+    Hline = [xHlineS yHlineS xHlineI yHlineI];
+    
     %% This sets the direction for image saving
     mkdir(dirname)
     basedir = pwd();
     address = [basedir '/' dirname '/' type];
     i = 1;
+    
     %% This while captures snapshots and saves suitedly cropped images
-    clear y;
-    while i < num_samples
+    set(gcf,'CurrentCharacter','@');            % set to a dummy character
+    while i <= num_samples
         img = snapshot(cam);
         dispImag = insertShape(img,'Rectangle',rectange,...
             'LineWidth',5,'Color','g');
@@ -42,12 +57,14 @@ function acquire_data(num_samples,cam,dirname,type)
         dispImag = insertShape(dispImag,'Line',Hline,...
             'LineWidth',3,'Color','g');
         imshow(dispImag);
-        y = input('Ready to take sample? (1/0): ');
-        if y == 1
+        mykey = get(gcf,'CurrentCharacter');
+        if mykey == 's'
             where = [address num2str(i) '.png'];
+            disp(['Saved at ' where]);
             data_img = imcrop(img,rectange);
             imwrite(data_img,where);
             i = i+1;
+            set(gcf,'CurrentCharacter','@');    % set to a dummy character
         end
     end
 end
