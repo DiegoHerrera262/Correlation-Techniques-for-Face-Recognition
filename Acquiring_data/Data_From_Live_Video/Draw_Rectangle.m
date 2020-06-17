@@ -30,7 +30,7 @@ hAxes = axes(hFig);
 %tamaños antes obtenidos y con el tipo de datos del video.
 hImage = image(hAxes, zeros(imHeight, imWidth, numBands, vidInfo.NativeDataType));
 
-%Muestra el video sobre el objto imagen
+%Muestra el video sobre el objeto imagen
 preview(vid, hImage);
 
 %Dibuja el rectángulo
