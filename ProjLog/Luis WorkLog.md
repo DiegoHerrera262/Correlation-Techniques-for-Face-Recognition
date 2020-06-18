@@ -365,8 +365,10 @@ As the second part of todays work, first is important to remember that the set o
 
 Before taking the step mentioned above, what we're going to do first is to take the 40 images, utilized up to these week, out of the filter (so it would consist only on the remaining 158 which would be known as "Filter_Sample") in order to create a "Test_Sample" to test these new filter. All of this, is based on the premise that the filter must work for test images not belongiong to the filter itself, as long as the subjects and the scene characteristics between a test image and the references are the same. Therefore , since in this case both sets had the same scene illumination and properties, we should obtain acceptable results. To clarify, we are taking this middleground satage first, since at the moment storing the PSE values has had to be done manually, in a further stage we'll lower the number of filter samples and expand the test set just as was said before.
 
-As a final note, it is worth mentioning that we'll eliminate the upper limit in the acceptance region, since it makes no sense to clasify an image with a good correlation plane and a high PSE as a no match. Hence, from now on we consider all PSE values above a minimum thereshold to be a sucessful match and all values bellow it to be a no match. In other words, the new acceptance region now has the form [mean-c*std,inf). Where c is a value to be variable 
-Hence, we performed the changes mentioned above and plot new graphs for the PSE values, ROC curves and FNR/TPR, using the new standadrs of acceptance region size and doing it for both preprocessing methods.    
+As a final note, it is worth mentioning that we'll eliminate the upper limit in the acceptance region, since it makes no sense to clasify an image with a good correlation plane and a high PSE as a no match. Hence, from now on we consider all PSE values above a minimum thereshold to be a sucessful match and all values bellow it to be a no match. In other words, the new acceptance region now has the form [mean-c*std,inf]. Where c is a value to be variable 
+Hence, we performed the changes mentioned above and plot new graphs for the PSE values, ROC curves and FNR/TPR, using the new standadrs of acceptance region size and doing it for both preprocessing methods.
 
 ***
 ## JUNE 17th 2020
+
+According to the last comments show yesterday, the PSE plots for both preprocessing methods (with a c value of 0.6 as an example) are shown below:
