@@ -8,17 +8,16 @@ clear all;
 close all;
 clc;
 %clf;
-path=addpath('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Sample4');
+path=addpath('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Filter_Sample');
 path2=addpath('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Impostor3');
-path3=addpath('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Sample3A');
+path3=addpath('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Test_Sample');
 
-%READING ALL PNG FILES
-read_files= dir('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Sample4\*.png'); 
+%% READING ALL PNG FILES
+read_files= dir('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Filter_Sample\*.png'); 
 read_files2=dir('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Impostor3\*.png');
-read_files3= dir('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Sample3A\*.png'); 
+read_files3= dir('C:\Users\Lucho xD\Desktop\Eighth Semester\Measures in Optics and Acoustics\Idea 1 proyecto\Image_Database\Test_Sample\*.png'); 
 
-%READING IMAGES 
-
+%% READING IMAGES 
 %REFERENCE SET
 img_r=cell(length(read_files),1); %Initialize your cell array so its number of elements is the same number of refs.
 for k=1:length(read_files)
@@ -29,19 +28,19 @@ end
 
 %TEST IMAGE
 %Image on the reference set
-N=20;Test_picture=read_files(N).name
-img_t=imread(Test_picture);img_t=imresize3(img_t,size(img_r{1}));
+N=28;Test_picture=read_files(N).name;
+%img_t=imread(Test_picture);img_t=imresize3(img_t,size(img_r{1}));
 
 %Impostor Image:
-M=40;Impstor_picture=read_files2(M).name;
+M=38;Impstor_picture=read_files2(M).name;
 %img_t=imread(Impstor_picture);img_t=imresize3(img_t,size(img_r{1}));
 
 %Image outside the reference set:
-L=2;STest_picture=read_files3(L).name;
-%img_t=imread(STest_picture);img_t=imresize3(img_t,size(img_r{1}));
+L=40;STest_picture=read_files3(L).name
+img_t=imread(STest_picture);img_t=imresize3(img_t,size(img_r{1}));
 
 
-%TRANSFORMING IMAGES TO GRAY SCALE
+%% TRANSFORMING IMAGES TO GRAY SCALE
 %REFERENCES IMAGES
 Ir=cell(length(img_r),1); %Initialize 
 for k=1:length(img_r) 
@@ -59,6 +58,8 @@ end
 It= rgb2gray(img_t);It=im2double(It);It=normalize(It);It=imadjust(It,[0.07 0.2]); %[low_in high_in]
 It=normalize(It);It=imcomplement(It);It=edge(It,'log');It=bwlabel(It);        
 
+%% COMPUTING THE FILTER
+
 %FT OF TARGET AND REFERENCES
 %References
 Fr=cell(length(Ir),1); %Initialize
@@ -71,7 +72,7 @@ Ft=fft2(It);
 %PARTIAL CORRELATIONS
 pc=cell(length(Fr),1); %Initialize
 for k=1:length(Fr)    
-pc{k}=fft2(Ft.*Fr{k});  %Note that each pc{k} is a matrix
+pc{k}=ifft2(Ft.*Fr{k});  %Note that each pc{k} is a matrix
 end
 
 %CALCULATING PCE FOR EACH CORRELATION
@@ -105,7 +106,7 @@ H_COM; %COM filter defined
 H_BCOM=sign(real(H_COM)); %BINARY COM filter constructed from H_COM
 
 
-%INCLUSION OF FILTER IN FOURIER PLANE-Multiplying filter by Target's FT.
+%% INCLUSION OF FILTER IN FOURIER PLANE-Multiplying filter by Target's FT.
 P=Ft.*H_BCOM;
 
 %TOTAL CORRELATION
@@ -116,10 +117,10 @@ C=ifftshift(c);% Shift the result for later ploting
 pos1 = [0.25 0.44 0.5 0.5];
 pos2 = [0.4 0.04 0.3 0.3]; %[left bottom width height]
 
-subplot('position',pos1);mesh(1+abs(C));colormap(jet);title('Shifted Correlation BCOM filter')%Result using H_BCOM
-subplot('position',pos2); imagesc(1+abs(C));colormap(jet); colorbar;                    %log NOT needed
+%subplot('position',pos1);mesh(1+abs(C));colormap(jet);title('Shifted Correlation BCOM filter')%Result using H_BCOM
+%subplot('position',pos2); imagesc(1+abs(C));colormap(jet); colorbar;                    %log NOT needed
 
-figure(2);imshow(It);title('Test image (Edge detection + Label function)');
+%figure(2);imshow(It);title('Test image (Edge detection + Label function)');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Calculating PCE for the actual correlation plane-Because before we
@@ -136,16 +137,44 @@ PSE_TOT=PSE(C)
 %The expected value gives me the the center of the detection band and the
 %standard deviation gives the width
 
-Band_center_PSE_True=11.8011;
-Band_width_PSE_True= 1.5893;
-Band_center_PSE_False= 5.5558;
-Band_width_PSE_False= 0.6629;
+%First Band
+%First group of samples: Filter:Sample4 Training:images 1,10-13,100-134.
+%Band_center_PSE_True=11.8011; Band_width_PSE_True= 1.5893; Band_center_PSE_False= 5.5558; Band_width_PSE_False= 0.6629;
+%Second group of samples: Filter: Filter_Sample Training:Training_Sample.
+%Band_center_PSE_True=11.8065;Band_width_PSE_True= 1.4954;Band_center_PSE_False= 5.4210;Band_width_PSE_False= 0.7022;
 
-     
- if (Band_center_PSE_True-Band_width_PSE_True)<=PSE_TOT && PSE_TOT<=(Band_center_PSE_True+Band_width_PSE_True)
-f = msgbox('Successful Match');
- elseif (Band_center_PSE_False-Band_width_PSE_False)<=PSE_TOT && PSE_TOT<=(Band_center_PSE_False+Band_width_PSE_False)
-f = msgbox('No Match');
- else
-f = msgbox('Inconclusive Result');
- end
+
+%Second Band
+%Band_width_PSE_True= 0.2*Band_width_PSE_True;Band_width_PSE_False= 0.2*Band_width_PSE_False;
+%Third Band
+%Band_width_PSE_True= 0.4*Band_width_PSE_True;Band_width_PSE_False= 0.4*Band_width_PSE_False;
+%Fourth Band
+%Band_width_PSE_True= 0.6*Band_width_PSE_True;Band_width_PSE_False= 0.6*Band_width_PSE_False;
+%Fifth Band
+%Band_width_PSE_True= 0.8*Band_width_PSE_True;Band_width_PSE_False= 0.8*Band_width_PSE_False;
+%Sixth Band
+%Band_width_PSE_True= 1.2*Band_width_PSE_True;Band_width_PSE_False= 1.2*Band_width_PSE_False;
+%Seventh Band
+%Band_width_PSE_True= 1.4*Band_width_PSE_True;Band_width_PSE_False= 1.4*Band_width_PSE_False;
+%Eighth Band
+%Band_width_PSE_True= 1.6*Band_width_PSE_True;Band_width_PSE_False= 1.6*Band_width_PSE_False;
+%Nineth Band
+%Band_width_PSE_True= 2.0*Band_width_PSE_True;Band_width_PSE_False= 2.0*Band_width_PSE_False;
+%Tenth Band
+%Band_width_PSE_True= 2.2*Band_width_PSE_True;Band_width_PSE_False= 2.2*Band_width_PSE_False;
+%Eleventh Band
+%Band_width_PSE_True= 2.6*Band_width_PSE_True;Band_width_PSE_False= 2.6*Band_width_PSE_False;
+%Twelfth Band
+%Band_width_PSE_True= 2.8*Band_width_PSE_True;Band_width_PSE_False= 2.8*Band_width_PSE_False;
+%thirteenth Band
+%Band_width_PSE_True= 3*Band_width_PSE_True;Band_width_PSE_False= 3*Band_width_PSE_False;
+%Fourteenth Band
+%Band_width_PSE_True= 3.6*Band_width_PSE_True;Band_width_PSE_False= 3.6*Band_width_PSE_False;
+
+
+
+%if (Band_center_PSE_True-Band_width_PSE_True)<=PSE_TOT 
+%f = msgbox('Successful Match');
+% else
+%f = msgbox('No Match');
+% end

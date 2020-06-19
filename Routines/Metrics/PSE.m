@@ -1,3 +1,9 @@
+%% Program that computes PSE in a correlation plane
+% Date : 18 - 06 - 20
+% Author: Diego Alejandro Herrera
+% Description: This program takes a correlation plane and returns both
+%              the peak to sidelobe ratio and the location of the peak
+
 function [pse, location] = PSE(corplane)
     %% Locate vicinity of peak
     % Find peak value and location

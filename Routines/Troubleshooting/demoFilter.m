@@ -12,13 +12,15 @@ function demoFilter(refimag,filtname,filttype)
     impath = 'none';
     if strcmp(filttype,'MINACE')
         impath = MINACE_Filter(filtname,refimag,1,10);
-    else
+    elseif strcmp(filttype,'HBCOM')
+        impath = HBCOM_Filter(filtname,refimag,4);
+    elseif strcmp(filttype,'MACE')
         impath = MACE_Filter(filtname,refimag,1,10);
     end
     
     %% Read image for output demo
     % the output name of *_filter is a cell for demo, 1 element cell.
-    imname = char(impath);
+    imname = char(impath(1));
     im = imread(imname);
     
     %% Show correlation output
