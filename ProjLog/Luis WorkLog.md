@@ -372,3 +372,18 @@ Hence, we performed the changes mentioned above and plot new graphs for the PSE 
 ## JUNE 17th 2020
 
 According to the last comments show yesterday, the PSE plots for both preprocessing methods (with a c value of 0.6 as an example) are shown below:
+PSE (Preprocessing 1)|PSE (Preprocessing 2)|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method1_PSE_plot2_0.6.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method2_PSE_plot2_0.6.png)
+
+The curves were we have the TPR against the FNR gave the following results
+
+Preprocessing 1|Preprocessing 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_2_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_2_METHOD2.png)
+
+
+And...
+Preprocessing 1|Preprocessing 2|
+:-------------------------:|:-------------------------:
+![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO2_STD_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO2_STD_METHOD2.png)
