@@ -37,7 +37,13 @@ function performSimulation...
 
     %% Compute n-Sample MACE
     subspsize = numel(Data);
-    usedImages = MACE_Filter(truedirname,refimag,numsamp,subspsize);
+    if strcmp(filtername,'MINACE')
+        usedImages = MINACE_Filter(truedirname,refimag,numsamp,subspsize);
+    elseif strcmp(filtername,'HBCOM')
+        usedImages = HBCOM_Filter(truedirname,refimag,numsamp);
+    elseif strcmp(filtername,'MACE')
+        usedImages = MACE_Filter(truedirname,refimag,numsamp,subspsize);
+    end
 
     %% Compute PSE and Peak location for True Data
     peakloc = zeros(numel(Data),2);
@@ -88,7 +94,7 @@ function performSimulation...
     meanFalse = meanF * ones(size(numRange));
 
     %% Plot PSE Results
-    figure(1);
+    figure('Name',['Simulación Reconocimiento con ' filtername]);
     subplot(1,2,1);
     scatter(idx,psevals,'o','MarkerFaceColor','b'); hold on;
     scatter(fake_idx,fake_psevals,'o','MarkerFaceColor','r'); hold on;
@@ -112,5 +118,5 @@ function performSimulation...
     ylabel('Peak Location');
     title('Localización Máximo');
     legend('Corrd. y','Coord. x','Location','best');
-
+    
 end
