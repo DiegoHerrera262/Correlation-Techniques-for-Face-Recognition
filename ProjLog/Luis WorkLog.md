@@ -376,14 +376,13 @@ PSE (Preprocessing 1)|PSE (Preprocessing 2)|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method1_PSE_plot2_0.6.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/Method2_PSE_plot2_0.6.png)
 
-The curves were we have the TPR against the FNR gave the following results
+The TPR vs FNR curves gave the following results
 
 Preprocessing 1|Preprocessing 2|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_2_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/TPR_VS_FNR_2_METHOD2.png)
 
-
-And...
+Finally, since for these new acceptance regions parameters we only have a thresehold determined by the PSE mean and a fraction of the standard deviation, thus instead of graphing the ratio FNR/TPR against the region size, we now plot this value against the fraction c of the std. Hence, the obtained plots are shown bellow:
 Preprocessing 1|Preprocessing 2|
 :-------------------------:|:-------------------------:
 ![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO2_STD_METHOD1.png)|![](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/Results/WorkLogResults-Luis/FNR_TPR_RATIO2_STD_METHOD2.png)
