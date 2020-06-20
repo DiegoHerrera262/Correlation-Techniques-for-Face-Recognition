@@ -60,9 +60,9 @@ function acquire_data(num_samples,cam,dirname)
         mykey = get(gcf,'CurrentCharacter');
         if mykey == 's'
             where = [address num2str(i) '.png'];
-            disp(['Saved at ' where]);
             data_img = imcrop(img,rectange);
             imwrite(data_img,where);
+            disp(['Saved at ' where]);
             i = i+1;
             set(gcf,'CurrentCharacter','@');    % set to a dummy character
         end
