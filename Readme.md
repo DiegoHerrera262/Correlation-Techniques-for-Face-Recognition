@@ -39,13 +39,13 @@ Clone this repository to a folder in your local memory drive. Download MATLAB de
 We suggest using MATLAB 2019b version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
 
 <p align="center">
-  <img width="460" height="300 src="Results/README/demoEnvironment.png">
+  <img width="570" height="300" src="ProjLog/Results/README/demoEnvironment.png">
 </p>
 
 Make sure that your current folder window looks like that before going on. Then run the script **setup.m** in the command window as follows:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoSetup.gif">
+  <img width="570" height="300" src="ProjLog/Results/README/demoSetup.gif">
 </p>
 
 This script should add the folder **Routines** to MATLABPATH and enable execution of the programs contained inside. Regular cleaning up of the workspace variables is advised in order to avoid conflicts. Also try to clean up the command window regularly. Use the commands:
@@ -74,7 +74,7 @@ This is the first step to carry out after repo cloning and environment setup. Da
 This is a very important step. A proper illuminations reduces the noise in the captured snapshots. This is a feature quite desirable for improving the performance of the filters in facial recognition. Ideally, the set up should include 4 light sources with proper screening (i.e. a white paper sheet) coming from crossed directions, two lateral, one above and one bellow the face of the subject. If the last one is not feasible, then make sure the other three are available at all costs. A simple demo of the set up is shown in the image bellow.
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoIllum.gif">
+  <img width="460" height="300" src="ProjLog/Results/README/demoIllum.png">
 </p>
 
 Once good illumination is ensured, run the routine **acquire_data**.
@@ -118,16 +118,10 @@ acquire_data(num_samples,cam,subject_name)
 
 * ```subject_name``` is a string that contains the first name of the subject. If already a folder in **RawDatabase** has that name, include the first letter of the last name, and so on.
 
-Execute steps as in the following animation:
+Execute steps as in the [linked animation](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/blob/master/ProjLog/Results/README/demoAcqdata.mp4). A live video with a target will appear in the screen as shown:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoAcqdata.mp4">
-</p>
-
-A live video with a target will appear in the screen as shown:
-
-<p align="center">
-  <img width="460" height="300" src="Results/README/demoInter.png">
+  <img width="460" height="300" src="ProjLog/Results/README/demoInter.png">
 </p>
 
 Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. In order to save a snapshot, ***click the figure window and press s key***, always in that sequence. A message will appear on the command window ensuring that the snapshot was successfully saved.
@@ -150,7 +144,7 @@ filter_images(Subject)
 Where ```Subject``` is a string with the name of the subject whose raw images are stored in the folder ```RawDatabase/Subject```. Once this is done, a new folder in the above mentioned location must appear with PNG files whose format name is ```filtered_sample*.png```. A sample of raw and preprocessed images is shown bellow:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoPrepro.png">
+  <img width="660" height="300" src="ProjLog/Results/README/demoPrepro.png">
 </p>
 
 **NOTE**: *For more conceptual and procedural details of this part of the protocol visit the wiki of the project repository*.
@@ -191,7 +185,7 @@ All the arguments retain pretty much the same meaning as for the HBCOM filter. `
 If the synthesis was carried out correctly a filter must be stored in the above mentioned path, and a message in the command window will show all images that were used in the processes. A sample of the output is shown bellow:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoFiltsynt.png">
+  <img width="490" height="300" src="ProjLog/Results/README/demoFiltsynt.png">
 </p>
 
 User can troubleshoot filter synthesis process using the function **demoFilter**. Type in the command window
@@ -203,7 +197,7 @@ demoFilter(refimag,Subject,filttype)
 Where ```filttype``` is a string that indicates the type of the filter to be demonstrated: ```'HBCOM'```, ```'MACE'```, ```'MINACE'```. This demo produces a sample self-correlation output of the reference image with a filter built from it. If everything is set up correctly, the output should be as bellow.
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoDemoFilt.png">
+  <img width="460" height="390" src="ProjLog/Results/README/demoDemoFilt.png">
 </p>
 
 **NOTE:** *Keep MATLAB workspace clean to avoid confusion. Close windows that are of little or no importance*.
@@ -279,7 +273,7 @@ The program compares a filter built from database of subject ```trueSubject```, 
 If everything is correct, a figure window should pop up. It contains the PSR metric evaluated for each of the sample images in the true and false databases. Also the peak location for the images in the true database. The index is consistent with the name of the image in the database. That is, image number 10 corresponds to ```ProcessedDatabase/Subject_filtered/filtered_sample10.png```. So it is easier to check the whole correlation plane for a particular test image using **CFxcorr** function. A demo output is shown bellow.
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoPerfSim.png">
+  <img width="5700" height="600" src="ProjLog/Results/README/demoPerfSim.png">
 </p>
 
 The mean values of PSR metric are shown, for both true and impostor class images. The location peaks are only shown for true class images. By using this plots user can
