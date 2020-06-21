@@ -28,7 +28,7 @@ For a detailed description of the theoretical and experimental reasons for the d
 
 Those are discussed further in the following subsections.
 
-### MATLAB environment setup
+## MATLAB environment setup
 
 Clone this repository to a folder in your local memory drive. Download MATLAB development environment from the official website and add the following add-ons from the official website:
 
@@ -118,15 +118,42 @@ acquire_data(num_samples,cam,subject_name)
 
 * ```subject_name``` is a string that contains the first name of the subject. If already a folder in **RawDatabase** has that name, include the first letter of the last name, and so on.
 
+Execute steps as in the following animation:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoAcqdata.mp4">
+</p>
+
 A live video with a target will appear in the screen as shown:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoInter.gif">
+  <img width="460" height="300" src="Results/README/demoInter.png">
 </p>
 
-Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. In order to save a snapshot, ***click the figure window and press s key***, always in that sequence. A message will appear on the command window ensuring that the snapshot was successfully saved. 
+Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. In order to save a snapshot, ***click the figure window and press s key***, always in that sequence. A message will appear on the command window ensuring that the snapshot was successfully saved.
 
 If these steps are followed correctly, 200 PNG files with the names ```sample*.png``` must appear on the folder ```RawDatabase/Subject```. These images will be used for filter synthesis after preprocessing.
+
+## Image Preprocessing
+
+This step is fundamental for intensity adjustment and image de-noising. Preprocessed images are stored in the folder ```ProcessedDatabase/Subject_filtered```. The following preprocessing techniques are used:
+
+1. Adaptative Histogram Equalization
+1. De-nosing via Wiener filter.
+
+These are implemented in the function ```filter_images```. The usage is quite elementary since internally all the hard processing and saving parts are carried out by the function. The user must enter in the command window:
+
+```Matlab
+filter_images(Subject)
+```
+
+Where ```Subject``` is a string with the name of the subject whose raw images are stored in the folder ```RawDatabase/Subject```. Once this is done, a new folder in the above mentioned location must appear with PNG files whose format name is ```filtered_sample*.png```. A sample of raw and preprocessed images is shown bellow:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoPrepro.png">
+</p>
+
+**NOTE**: *For more conceptual and procedural details of this part of the protocol visit the wiki of the project repository*.
 
 ## Contents
 

@@ -18,6 +18,7 @@ function filter_images(dirname)
     for k = 1:length(images)
         RGB = imread(strcat(Path,'/',images(k).name));
         I = rgb2gray(RGB);
+        I = imadjust(I);
         I2 = wiener2(I,[5 5]);
         % Save the image
         where = [address 'filtered_' images(k).name];
