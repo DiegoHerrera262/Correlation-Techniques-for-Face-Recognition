@@ -39,7 +39,7 @@ Clone this repository to a folder in your local memory drive. Download MATLAB de
 We suggest using MATLAB 2019b version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
 
 <p align="center">
-  <img width="460" height="300" src="Results/README/demoEnvironment.png">
+  <img width="460" height="300 src="Results/README/demoEnvironment.png">
 </p>
 
 Make sure that your current folder window looks like that before going on. Then run the script **setup.m** in the command window as follows:
