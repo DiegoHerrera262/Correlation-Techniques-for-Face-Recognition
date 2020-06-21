@@ -155,6 +155,55 @@ Where ```Subject``` is a string with the name of the subject whose raw images ar
 
 **NOTE**: *For more conceptual and procedural details of this part of the protocol visit the wiki of the project repository*.
 
+## Filter synthesis
+
+This is the core step of the project. Chosen filters include HBCOM, MACE and MINACE. This are computed performing minimization algorithms. For more conceptual details visit the wiki page of the repository. The three routines:
+
+* **HBCOM_Filter**
+* **MACE_Filter**
+* **MINACE_Filter**
+
+work pretty the same way. A training subset is chosen from the preprocessed database corresponding to a particular subject, and a number of images from this set is used to form a linear combination that optimizes certain physical property of the correlation plane. This linear combination in the image frequency space constitutes the filter. This filter is stored in the folder ```filters```, as a ```*.mat```  file. The prefix in the filename indicates the type of filter (HBCOM, MACE, MINACE, etc.). The filename includes subject name and a suffix **_filter**. The function returns the names of the figures used in the filter construction as a ***MATLAB cell object***.
+
+To build an HBCOM filter, type in the command window:
+
+```Matlab
+usedImages = HBCOM_Filter(Subject,refimag,training_set_size)
+```
+
+* ```Subject``` is a string with the subject name whose preprocessed pictures have been stored on ```ProcessedDatabase/Subject_filtered```.
+
+* ```refimag``` is an integer that indicates the image that is to be used as a reference to build the filter. This is read from ```ProcessedDatabase/Subject_filtered/filtered_sample(refimag).png```. For more details on this see the project wiki.
+
+* ```training_set_size``` is an integer that indicates how many images are to be used in the construction of the filter, i.e. the number of images in the linear combination.
+
+To build either a MACE or a MINACE type in the command window:
+
+```Matlab
+usedImages = MACE_Filter(Subject,refimag,numimag,training_set_size)
+usedImages = MINACE_Filter(Subject,refimag,numimag,training_set_size)
+```
+
+All the arguments retain pretty much the same meaning as for the HBCOM filter. ```numimag``` refers to the actual number of images from the training set that are used in the filter construction. For more details, see the wiki of the project.
+
+If the synthesis was carried out correctly a filter must be stored in the above mentioned path, and a message in the command window will show all images that were used in the processes. A sample of the output is shown bellow:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoFiltsynt.png">
+</p>
+
+User can troubleshoot filter synthesis process using the function **demoFilter**. Type in the command window
+
+```Matlab
+demoFilter(refimag,Subject,filttype)
+```
+
+Where ```filttype``` is a string that indicates the type of the filter to be demonstrated: ```'HBCOM'```, ```'MACE'```, ```'MINACE'```. This demo produces a sample self-correlation output of the reference image with a filter built from it. If everything is set up correctly, the output should be as bellow.
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoDemoFilt.png">
+</p>
+
 ## Contents
 
 The project contains the following folders:
