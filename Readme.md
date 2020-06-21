@@ -1,6 +1,6 @@
 # Correlation Filters for Pattern Recognition
 
-In this Repo you will find documentation of the process of exploring correlation filters and Fourier transforms to identify a human face using advanced correlation techniques. It is a project developed for the course on Optics and Acoustics from the National University of Colombia. It is carried out by:
+In this Repo you will find MATLAB codes used to explore non-segmentation techniques for facial recognition using correlation techniques with linear filters. It is a project developed for the course on Optics and Acoustics from the National University of Colombia. It is carried out by:
 
 * Diego Alejandro Herrera Rojas
 * Luis Carlos Duran Neme
@@ -9,7 +9,45 @@ In this Repo you will find documentation of the process of exploring correlation
 
 ## Description
 
-The aim is to develop a MATLAB - based application that may be deployed on any computer, that ultimately will identify a persons face in a scene. If possible, an Android application might be developed so that the face-recognition system can be used in a smartphone.
+The main objective of the project is to design and implement a correlation-based static facial verification algorithm. That is, an algorithm that automates the recognition of a person using his or her face, with an accuracy higher than 80%. In order to achieve that goal, the following specific objectives were set:
+
+* Determine an image database acquisition protocol that allows synthesis of a robust linear filter in terms of intensity and noise in the image.
+* Develop an image acquisition routine that automates this part of the process.
+* Implement a robust algorithm for filter design and synthesis, both for MACE and HBCOM filters.
+* Implement normalization metrics that allow for correlation peak characterization and a confidence of 80% in facial verification.
+
+## How to use the routines
+
+For a detailed description of the theoretical and experimental reasons for the defined protocol of routines usage see the wiki page of the project. The protocol has the following steps:
+
+* MATLAB environment setup.
+* Image database acquisition.
+* Image preprocessing.
+* Filter synthesis.
+* Performance simulation.
+
+Those are discussed further in the following subsections.
+
+### MATLAB environment setup
+
+Clone this repository to a folder in your local memory drive. Download MATLAB development environment from the official website and add the following add-ons from the official website:
+
+* Image Acquisition Toolbox from MathWorks
+* Image Processing Toolbox from MathWorks
+* Matlab Support Package for USB webcams from MathWorks
+
+We suggest using MATLAB 2019b version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoEnvironment.png">
+</p>
+
+Make sure that your current folder window looks like that before going on. Then run the script **setup.m** in the command window as follows:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoSetup.gif">
+</p>
+
 
 ## Contents
 

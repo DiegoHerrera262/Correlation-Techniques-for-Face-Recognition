@@ -6,7 +6,7 @@
 %              correlation output of the other images in the
 %              set. A plot of PSE vs. Image number is generated
 
-function performSimulation...
+function usedImages = performSimulation...
     (truedirname,falsedirname,refimag,numsamp,filtername)
     %% Parameters of True Folder location
     trueFolder = [pwd() '/ProcessedDatabase/' ...
@@ -37,6 +37,7 @@ function performSimulation...
 
     %% Compute n-Sample MACE
     subspsize = numel(Data);
+    usedImages = {};
     if strcmp(filtername,'MINACE')
         usedImages = MINACE_Filter(truedirname,refimag,numsamp,subspsize);
     elseif strcmp(filtername,'HBCOM')
@@ -100,8 +101,10 @@ function performSimulation...
     scatter(fake_idx,fake_psevals,'o','MarkerFaceColor','r'); hold on;
     plot(numRange,meanTrue,'LineWidth',2.0,'Color','b'); hold on;
     plot(numRange,meanFalse,'LineWidth',2.0,'Color','r');
-    text(80,140,['PSE_T = ' num2str(meanT,3)],'FontSize',15,'Color','b');
-    text(80,120,['PSE_F = ' num2str(meanF,3)],'FontSize',15,'Color','r');
+    text(80,meanT,['PSE_T = ' num2str(meanT,3)],...
+        'FontSize',15,'Color','k');
+    text(80,meanF,['PSE_F = ' num2str(meanF,3)],...
+        'FontSize',15,'Color','k');
     xlabel('No. Figura');
     ylabel('PSE');
     title(['PSE con referencia a imagen ' num2str(...
