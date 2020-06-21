@@ -163,7 +163,7 @@ This is the core step of the project. Chosen filters include HBCOM, MACE and MIN
 * **MACE_Filter**
 * **MINACE_Filter**
 
-work pretty the same way. A training subset is chosen from the preprocessed database corresponding to a particular subject, and a number of images from this set is used to form a linear combination that optimizes certain physical property of the correlation plane. This linear combination in the image frequency space constitutes the filter. This filter is stored in the folder ```filters```, as a ```*.mat```  file. The prefix in the filename indicates the type of filter (HBCOM, MACE, MINACE, etc.). The filename includes subject name and a suffix **_filter**. The function returns the names of the figures used in the filter construction as a ***MATLAB cell object***.
+work pretty much the same way. A training subset is chosen from the preprocessed database corresponding to a particular subject, and a number of images from this set is used to form a linear combination that optimizes certain physical property of the correlation plane. This linear combination in the image frequency space constitutes the filter. This filter is stored in the folder ```filters```, as a ```*.mat```  file. The prefix in the filename indicates the type of filter (HBCOM, MACE, MINACE, etc.). The filename includes subject name and a suffix **_filter**. The function returns the names of the figures used in the filter construction as a ***MATLAB cell object***.
 
 To build an HBCOM filter, type in the command window:
 
@@ -177,7 +177,9 @@ usedImages = HBCOM_Filter(Subject,refimag,training_set_size)
 
 * ```training_set_size``` is an integer that indicates how many images are to be used in the construction of the filter, i.e. the number of images in the linear combination.
 
-To build either a MACE or a MINACE type in the command window:
+* ```usedImages``` is a **MATLAB cell** whose elements are the paths of the images used for the filter construction in user local hard drive. Access path of ith image by typing ```char(usedImages(i))```.
+
+To build either a MACE or a MINACE, type in the command window:
 
 ```Matlab
 usedImages = MACE_Filter(Subject,refimag,numimag,training_set_size)
@@ -204,22 +206,90 @@ Where ```filttype``` is a string that indicates the type of the filter to be dem
   <img width="460" height="300" src="Results/README/demoDemoFilt.png">
 </p>
 
-## Contents
+**NOTE:** *Keep MATLAB workspace clean to avoid confusion. Close windows that are of little or no importance*.
 
-The project contains the following folders:
+## Performance simulation
 
-1) **MATLABCodes**: This folder contains the MATLAB codes used to explore the capabilities of correlation techniques.
-2) **images**: Contains images for filter synthesis and further facial identification processes.
-3) **Figures**: Contains images for initial exploration.
+Once the filters are computed, the performance simulation has two important components:
 
-## Push Formats
+1. Computation of the correlation plane or correlation output.
+1. Computation of normalization metrics.
 
-In order to keep track of the work, the following formats are proposed for committing files to the repository:
+The first part emulates the actual intensity patter produced by an electro-optical correlator implementing the filter, while the second assesses the quality of the peak. The last part is what actually decides the face verification by proper theresholding of the metric.
 
-* All code files must be in a directory with the name **(Language)Codes**. For instance, if the codes are in MATLAB, they must be in the directory **MATLABCodes**.
+### Computation of the correlation plane
 
-* All code files must have a heading that includes: 1) Descriptive title, 2) Author's name, 3) Date of deploy, 4) Brief description. Codes must be accurately commented so that anyone can understand them.
+This part is carried out by the function **CFxcorr**. This function takes as inputs a test image to be matched with a filter, the name of the subject used for comparison, and the type of filter to be used (HBCOM, MACE, MINACE, etc.). The output is a matrix that contains the scaled intensity pattern of the correlation plane in real space. The scaling is arbitrary and is just for visual purposes.
 
-* Al images that are not used for filter synthesis must go in the directory **Figures**. Images that are used for filter synthesis must be in directory **images**, and in a subdirectory with the name of the person to be identified.
+For usage, read a test image in the MATLAB workspace using ```imread()``` function. Documentation of usage can be seen typing ```doc imread``` in command window. Do that by typing:
 
-* Al images must be stored in *PNG* format.
+```Matlab
+test_im = imread('path/to/file');                      % Reads image to workspace
+```
+
+**NOTE:** *Semicolon is important because prevents MATLAB from displaying the image matrix on the command window*.
+
+Once the test image is read, use the following commands to compute and display the correlation output
+
+```Matlab
+corplane = CFxcorr(test_im,Subject,filttype);          % Computes the correlation plane
+surf(corplane);                                        % Displays corr. output
+```
+
+If everything is correct, a figure window must pop up and a sharp peak indicates high correlation, whereas noisy plane indicates little correlation. To assess the quality of the peak normalization metrics must be used to eliminate factors such as image intensity.
+
+### Application of normalization metrics
+
+The project contains two types of metric, **Peak to Correlation Energy (PCE)** and **Peak to Sidelobe Ration (PSR)**. Both functions receive as arguments the correlation plane, i.e. a double matrix, and return the metrics as defined in the wiki of the project.
+
+To compute PCE, call the function **PCE**
+
+```Matlab
+pce = PSE(corrplane)
+```
+
+* ```pce``` is a double variable that contains the PCE metric of the plane.
+
+* ```corrplane``` is a double matrix that represents the correlation output.
+
+To compute PSR, call the function **PSR**
+
+```Matlab
+[pse, location] = PSR(corrplane)
+```
+
+* ```pse``` is a double variable that contains the PSR metric of the plane.
+
+* ```location``` is a 2D double column vector that contains the location of the peak in the correlation plane.
+
+A high normalization metric typically means strong correlation, while low value means weak correlation. The location of the peak is an indication of the spatial location of the biometric feature of interest, in the current application this would be the face. Further discussion in the wiki of the project.
+
+### Shortcuts for performance simulation
+
+In the project user can run **performSimulation** to automate the steps above and also compare performance over different image data. To use this function type in the command window
+
+```Matlab
+usedImages = performSimulation(trueSubject,falseSubject,refimag,numimag,filttype)
+```
+
+The program compares a filter built from database of subject ```trueSubject```, with the images inside that database, taken to be true class, and with images in an impostor set ```falseSubject```, taken to be false class. Note that the last three arguments are used to build a correlation filter as discussed above. ```usedImages```has the same meaning as discussed previously.
+
+**NOTE:** *In general, a small proportion of the images in the true database are used to build the correlation filter. So an assessment of the performance of the filter inside the whole database is meaningful*.
+
+If everything is correct, a figure window should pop up. It contains the PSR metric evaluated for each of the sample images in the true and false databases. Also the peak location for the images in the true database. The index is consistent with the name of the image in the database. That is, image number 10 corresponds to ```ProcessedDatabase/Subject_filtered/filtered_sample10.png```. So it is easier to check the whole correlation plane for a particular test image using **CFxcorr** function. A demo output is shown bellow.
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoPerfSim.png">
+</p>
+
+The mean values of PSR metric are shown, for both true and impostor class images. The location peaks are only shown for true class images. By using this plots user can
+
+1. Zoom in on particularly good/bad performing images to determine particular features.
+2. Determine thereshold metric value for identity verification.
+3. Determine correlation between peak location and actual spatial location of a face.
+
+**NOTE:** *This routine might be of great help for those users with little experience with MATLAB. It is advised that those users examine this routine in great extent. For more experienced users, the metric and plane-computation routines are the most fundamental ones.*
+
+## Conclusion
+
+With this protocol, it is expected that the user creates his or her own database and explores the capabilities of non-segmentation biometric recognition techniques using linear correlation filters. In case of further advise, contact the members of the project via e-mail. The default contact address is  *diegoherrera262@gmail.com*. We hope that users of all degrees of experience enjoy playing with these routines and feel encouraged to explore further.
