@@ -4,7 +4,7 @@
 % Description: This program takes a correlation plane and returns both
 %              the peak to sidelobe ratio and the location of the peak
 
-function [pse, location] = PSE(corplane)
+function [pse, location] = PSR(corplane)
     %% Locate vicinity of peak
     % Find peak value and location
     [peak, idx] = max(corplane(:));

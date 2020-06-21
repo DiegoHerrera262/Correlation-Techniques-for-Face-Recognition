@@ -75,7 +75,10 @@ function usedImages = HBCOM_Filter(dirname,refimag,subspace_size)
         filter = sign(real(1.0/etot^(-0.8) * filter));
         
         %% Save the filter
-        mkdir('filters');
+        cond = exist('filters','dir') ~= 7;
+        if cond
+            mkdir('filters');
+        end
         save(fullfile(curr_loc,'filters',...
             ['HBCOM_' dirname '_' 'filter.mat']),...
             'filter','-mat');

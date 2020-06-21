@@ -46,9 +46,9 @@ function usedImages = performSimulation...
         usedImages = MACE_Filter(truedirname,refimag,numsamp,subspsize);
     end
 
-    %% Compute PSE and Peak location for True Data
+    %% Compute PSR and Peak location for True Data
     peakloc = zeros(numel(Data),2);
-    psevals = zeros(numel(Data),1);
+    psrvals = zeros(numel(Data),1);
     idx = zeros(numel(Data),1);
     for k = 1:numel(Data)
         % Extract real image index
@@ -61,15 +61,15 @@ function usedImages = performSimulation...
         % Compute correlation
         corrplane = CFxcorr(im,truedirname,filtername);
         % Compute PSE and Peak Location
-        [pse, location] = PSE(corrplane);
-        psevals(k) = pse;
+        [psr, location] = PSR(corrplane);
+        psrvals(k) = psr;
         peakloc(k,1) = location(1);
         peakloc(k,2) = location(2);
     end
 
     %% Compute PSE and Peak Location for False Data
     fake_peakloc = zeros(numel(Fake),2);
-    fake_psevals = zeros(numel(Fake),1);
+    fake_psrvals = zeros(numel(Fake),1);
     fake_idx = zeros(numel(Fake),1);
     for k = 1:numel(Fake)
         % Extract real image index
@@ -82,23 +82,23 @@ function usedImages = performSimulation...
         % Compute correlation
         corrplane = CFxcorr(im,truedirname,filtername);
         % Compute PSE and Peak Location
-        [pse, location] = PSE(corrplane);
-        fake_psevals(k) = pse;
+        [psr, location] = PSR(corrplane);
+        fake_psrvals(k) = psr;
         fake_peakloc(k,1) = location(1);
         fake_peakloc(k,2) = location(2);
     end
 
     %% Compute mean values of PSE for both sets
-    meanT = mean(psevals); meanF = mean(fake_psevals);
+    meanT = mean(psrvals); meanF = mean(fake_psrvals);
     numRange = 1:0.1:200;
     meanTrue = meanT * ones(size(numRange));
     meanFalse = meanF * ones(size(numRange));
 
-    %% Plot PSE Results
+    %% Plot PSR Results
     figure('Name',['Simulación Reconocimiento con ' filtername]);
     subplot(1,2,1);
-    scatter(idx,psevals,'o','MarkerFaceColor','b'); hold on;
-    scatter(fake_idx,fake_psevals,'o','MarkerFaceColor','r'); hold on;
+    scatter(idx,psrvals,'o','MarkerFaceColor','b'); hold on;
+    scatter(fake_idx,fake_psrvals,'o','MarkerFaceColor','r'); hold on;
     plot(numRange,meanTrue,'LineWidth',2.0,'Color','b'); hold on;
     plot(numRange,meanFalse,'LineWidth',2.0,'Color','r');
     text(80,meanT,['PSE_T = ' num2str(meanT,3)],...

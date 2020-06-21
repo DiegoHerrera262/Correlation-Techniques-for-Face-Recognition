@@ -1,4 +1,4 @@
-# Correlation Filters for Pattern Recognition
+# Correlation Filters for Facial Recognition
 
 In this Repo you will find MATLAB codes used to explore non-segmentation techniques for facial recognition using correlation techniques with linear filters. It is a project developed for the course on Optics and Acoustics from the National University of Colombia. It is carried out by:
 
@@ -32,9 +32,9 @@ Those are discussed further in the following subsections.
 
 Clone this repository to a folder in your local memory drive. Download MATLAB development environment from the official website and add the following add-ons from the official website:
 
-* Image Acquisition Toolbox from MathWorks
-* Image Processing Toolbox from MathWorks
-* Matlab Support Package for USB webcams from MathWorks
+* **Image Acquisition Toolbox** from MathWorks
+* **Image Processing Toolbox** from MathWorks
+* **Matlab Support Package for USB webcams** from MathWorks
 
 We suggest using MATLAB 2019b version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
 
@@ -48,6 +48,83 @@ Make sure that your current folder window looks like that before going on. Then 
   <img width="460" height="300" src="Results/README/demoSetup.gif">
 </p>
 
+This script should add the folder **Routines** to MATLABPATH and enable execution of the programs contained inside. Regular cleaning up of the workspace variables is advised in order to avoid conflicts. Also try to clean up the command window regularly. Use the commands:
+
+```Matlab
+clear varname;            % This deletes variable varname
+clc;                      % This cleans command window like clear on command promt
+```
+Once your environment is set up you can:
+
+* Generate an image database in your local hard drive.
+* Compute a MACE, HBCOM or MINACE filter.
+* Examine correlation outputs for a particular image in the database.
+* Compute normalization metrics for peak quality assessment.
+* Carry out performance simulations of one of those filters.
+
+## Image database acquisition
+
+This is the first step to carry out after repo cloning and environment setup. Database acquisition requires two steps:
+
+1. Setting up of the illumination conditions and webcam for snapshot capture.
+1. Calling function **acquire_data**.
+
+### Setting up illumination conditions
+
+This is a very important step. A proper illuminations reduces the noise in the captured snapshots. This is a feature quite desirable for improving the performance of the filters in facial recognition. Ideally, the set up should include 4 light sources with proper screening (i.e. a white paper sheet) coming from crossed directions, two lateral, one above and one bellow the face of the subject. If the last one is not feasible, then make sure the other three are available at all costs. A simple demo of the set up is shown in the image bellow.
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoIllum.gif">
+</p>
+
+Once good illumination is ensured, run the routine **acquire_data**.
+
+### Calling function acquire_data
+
+This simple routine captures a definite number of snapshots and saves them in a folder with subjects name in **RawDatabase** folder. By default, images are stored in PNG format, since JPG loses too much information. This is automatically managed by the routine and user must not worry about that aspect. User must establish a webcam connection in MATLAB workspace. To do that, type ```webcamlist``` on command window. This will produce a cell object that contains the names of the possible USB webcams that MATLAB can access. Preferable connection is to built-in webcam. If none is available, it is suggested that user installs apps like **EpocCam** or **DroidCam** that allow management smartphones as USB webcams for several desktop applications. Keep in mind the index of the name of the desired connection. The type in the command window:
+
+```Matlab
+cam = webcam(idx)
+```
+Where ```idx``` stands for the index of the desired connection in the webcam list. If a connection to built-in camera is established, a green LED must turn on. If no semicolon is added, something like this should be prompted in the command window:
+
+```Matlab
+cam =
+
+  webcam with properties:
+
+                    Name: 'Cámara FaceTime HD (integrada)'
+    AvailableResolutions: {'1280x720'}
+              Resolution: '1280x720
+```
+
+Make sure that the resolution is 1280x720 for internal consistency. Change the resolution typing in the command window:
+
+```Matlab
+cam.Resolution = '1280x720'
+```
+
+**NOTE**: *If the available resolutions do not include this value, the programs can still be used but only with data taken with the same webcam*.
+
+Once connection to webcam device is successfully stablished, execute:
+
+```Matlab
+acquire_data(num_samples,cam,subject_name)
+```
+
+* ```num_samples``` is the number of snapshots to be stored. It is suggested that exactly 200 samples be stored, however, user may decide. This does not have to do with filter performance, but ensures consistency when carrying out performance simulations.
+
+* ```cam``` is a webcam connection in MATLAB workspace.
+
+* ```subject_name``` is a string that contains the first name of the subject. If already a folder in **RawDatabase** has that name, include the first letter of the last name, and so on.
+
+A live video with a target will appear in the screen as shown:
+
+<p align="center">
+  <img width="460" height="300" src="Results/README/demoInter.gif">
+</p>
+
+Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. If these steps are followed correctly, 200 PNG files with the names ```sample*.png``` must appear on the folder ```RawDatabase/Subject```. These images will be used for filter synthesis after preprocessing.
 
 ## Contents
 

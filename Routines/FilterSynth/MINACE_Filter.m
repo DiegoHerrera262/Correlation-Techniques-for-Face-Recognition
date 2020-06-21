@@ -68,7 +68,7 @@ function usedImages = MINACE_Filter(dirname,refimag,num_imag,subspace_size)
         peakloc = zeros(subspace_size,2);
         psevals = zeros(subspace_size,1);
         for i = 1:(num_imag-1)
-            % Compute PSE for images in Subspace
+            % Compute PSR for images in Subspace
             for j = 1:subspace_size
                 % read image from training set
                 filename = [base '/' Data(j).name];
@@ -76,8 +76,8 @@ function usedImages = MINACE_Filter(dirname,refimag,num_imag,subspace_size)
                 corrplane = abs(fftshift(ifft2(...
                     conj(filter) .* fft2(im)...
                     )));
-                % Compute PSE and Peak Location
-                [pse, location] = PSE(corrplane);
+                % Compute PSR and Peak Location
+                [pse, location] = PSR(corrplane);
                 psevals(j) = pse;
                 peakloc(j,1) = location(1);
                 peakloc(j,2) = location(2);
@@ -105,7 +105,10 @@ function usedImages = MINACE_Filter(dirname,refimag,num_imag,subspace_size)
     
 
     %% Save the filter
-    mkdir('filters');
+    cond = exist('filters','dir') ~= 7;
+    if cond
+        mkdir('filters');
+    end
     save(fullfile(curr_loc,'filters',...
         ['MINACE_' dirname '_' 'filter.mat']),'filter','-mat');
 end

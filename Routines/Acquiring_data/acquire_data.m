@@ -42,7 +42,10 @@ function acquire_data(num_samples,cam,dirname)
     
     %% This sets the direction for image saving
     dirpath = [pwd() '/' 'RawDatabase' '/' dirname];
-    mkdir(dirpath);
+    cond = exist(dirpath,'dir') ~= 7;
+    if cond
+        mkdir(dirpath);
+    end
     address = [dirpath '/sample' ];
     i = 1;
     
