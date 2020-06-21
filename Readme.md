@@ -124,7 +124,9 @@ A live video with a target will appear in the screen as shown:
   <img width="460" height="300" src="Results/README/demoInter.gif">
 </p>
 
-Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. If these steps are followed correctly, 200 PNG files with the names ```sample*.png``` must appear on the folder ```RawDatabase/Subject```. These images will be used for filter synthesis after preprocessing.
+Please make sure that the images are properly centered by locating the nose on the center of the target. Also, make sure that the eyebrows and upper part of the chin are located at the upper limits of the box. Additionally, locate the lateral borders of the face in the corresponding sides of the box. It is advised that the image plane of the face remains constant while the facial expression is changed. However this is a user call. In order to save a snapshot, ***click the figure window and press s key***, always in that sequence. A message will appear on the command window ensuring that the snapshot was successfully saved. 
+
+If these steps are followed correctly, 200 PNG files with the names ```sample*.png``` must appear on the folder ```RawDatabase/Subject```. These images will be used for filter synthesis after preprocessing.
 
 ## Contents
 
