@@ -3,14 +3,14 @@
 ***
 ## May 19th 2020.
 
-It all started with the need to reduce de noise 
+It all started with the need to reduce de noise caused by ilumniation and contrast conditions on images. 
 
 ***
 ## May 24th 2020
 
  Target and Reference | Original Correlation result  
 :-------------------------:|:-------------------------:
-![](Results/WorkLogResults-Luis/NoNormInput.png)  |  ![](Results/WorkLogResults-Luis/NoNorm.png)
+![](Results/AndresWorkLog/sample.png)  |  ![](Results/AndresWorkLog/enhanced_sample.png)
 
 
 ***
