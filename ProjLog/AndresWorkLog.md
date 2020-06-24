@@ -8,7 +8,7 @@ It all started with the need to reduce de noise caused by ilumniation and contra
 ***
 ## May 24th 2020
 
- Target and Reference | Original Correlation result  
+ Original Sample | Enhanced Sample  
 :-------------------------:|:-------------------------:
 ![](Results/AndresWorkLog/sample.png)  |  ![](Results/AndresWorkLog/enhanced_sample.png)
 
