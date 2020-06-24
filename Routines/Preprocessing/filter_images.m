@@ -1,6 +1,6 @@
 % Program that filters pictures and saves them in current directory
 % Date : 30 - 05 - 20
-% Author: Andrés Duque Bran
+% Author: AndrÃ©s Duque Bran
 % Description: This program filtered pictures from a selected database using a Wiener filter within 
 %              a radius of five pixels and saves them in a new directory.
 
@@ -18,10 +18,12 @@ function filter_images(dirname)
     for k = 1:length(images)
         RGB = imread(strcat(Path,'/',images(k).name));
         I = rgb2gray(RGB);
-        I = imadjust(I);
-        I2 = wiener2(I,[5 5]);
+        I1 = imadjust(I);
+        I2 = histeq(I1);
+        I3 = adapthisteq(I2);  
+        I4 = wiener2(I3,[5 5]);
         % Save the image
         where = [address 'filtered_' images(k).name];
-        imwrite(I2,where);
+        imwrite(I4,where);
     end
 end
