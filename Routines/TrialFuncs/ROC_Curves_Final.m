@@ -14,7 +14,7 @@ True_PSE_STD= 1.6248;
 % False_PSE_mean= ;   %ORIGINAL MATCH BAND:[];
 %False_PSE_STD = ;
 
-%The match bands are taken in this way: [mean-c*std,mean+c*std] where c is
+%The match bands are taken in this way: [mean-c*std,infinity) where c is
 %a constant and takes the values: 0.2-3.6 inreasing in steps of 0.2
 
 TPR=1/N.*[26 27 28 32 33 34 36 38 39 39 39 39 40 40 40 40 40 40]; %TRUE POSITIVES RATE 
@@ -28,7 +28,7 @@ True_PSE_STD_2= 1.4759;
 %False_PSE_mean_2= ;  OG Match region = []; 
 %False_PSE_STD_2 = ;
 
-%The match bands are taken in this way: [mean-c*std,mean+c*std] where c is
+%The match bands are taken in this way: [mean-c*std,infinity) where c is
 %a constant and takes the values: 0.2-3.6 inreasing in steps of 0.2
 
 TPR_2=1/N.*[25 28 30 32 33 33 36 38 38 39 39 39 40 40 40 40 40 40];%TRUE POSITIVES RATE
