@@ -405,7 +405,29 @@ As a last comment for this new codes, is necessary to clarify that they're able 
 
 ***
 
-## JUNE 26th-27th
+## JUNE 26th-28th
 I uploaded the final structure of the codes i've been working on and following the stablished contribution format. Those codes are found in the TrialFuncs folder and are compose by the code structure for PSE plots and ROC curves, the impostor trials, the self correlation and total correlation plane computation. For this last one is convinient to keep checking the preprocessing structure for further steps on the project, however these days i'll be focusing on the standarization of ROC curves ploting in order to complete the package of standarize functions build by my partners.
 
-Hence, i build a function to standarize the ploting of the ROC curves, the TPR vs FNR curves and the FNR/TPR against the fraction of std used to form the acceptance region. The function that generates this curves is called  ROC.m and its structure is based on the function Performsimulation.m        
+Hence, i build a function to standarize the ploting of the two types of ROC curves, the TPR vs FNR curves and the FNR/TPR against the fraction of std used to form the acceptance region. The function that generates this curves is called  ROC.m and its structure is based on the function Performsimulation.m. It is important to mention that for the first type of ROC curve is necessary to plot the value called Equal Error Rate or EER which is a point on the curve corresponding to the acceptance region thereshold value where the false positive rate equals the false negative rate, or in oder words the point where |FPR-FNR|=0. However, this equality is not always possible for the actual values, therefore we define a range of tolerance to aproximate such point, that is we make the condition |FPR-FNR|<tol, where tol is a constant preferably between 0 and 0.1, nevertheless its value migth change depending on the type of filter used, the test image employed to do so and the set of impostors and real images.
+
+Now, based on the description above, the first type of ROC curves and the FNR/TPR vs std plots are shown bellow using the "Diego" folder as the real set, the "German" set as the impostor and the three types of filters (MACE, MINACE and BCOM) worked on the proyect, which are constructed with 5 samples in each case and the preprocessing method stablished partners until now is implementedd.
+
+### MACE:
+
+ROC curve|FNR/TPR vs std|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_type1_Diego_German_MACE_26.png)|![](Results/WorkLogResults-Luis/FNR_TPR_RATIO_Diego_German_MACE_26.png)
+
+### MINACE:
+
+ROC curve|FNR/TPR vs std|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_type1_Diego_German_MINACE_26.png)|![](Results/WorkLogResults-Luis/FNR_TPR_RATIO_Diego_German_MINACE_26.png)
+
+### BCOM:
+
+ROC curve|FNR/TPR vs std|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_type1_Diego_German_HBCOM_26.png)|![](Results/WorkLogResults-Luis/FNR_TPR_RATIO_Diego_German_HBCOM_26.png)
+
+As one can se, in all three cases the FNR/TPR vs STD fraction curve gives really good results which show a mostly rapidly decay behaviour, where at first sight  a good value to define the thereshold seems to be around 0.5 and 1 times the std for the MACE and MINACE filters, for the BCOM filter the value appears to be between 1 and 1.5. On the other hand, by looking at the ROC curves one can see that for these new type of preprocessing and impostor/real image sets, the BCOM filter sitil performs really good since a false positive is hardly detected. Conversely, the ROC curves for other filters do exhibit a curve, meaning that is easier to get a false postive for certain theresholds, also, both plots show a very similar behaviour and their EER values are located in the same range ([0.1,0.2]).      
