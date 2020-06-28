@@ -407,3 +407,5 @@ As a last comment for this new codes, is necessary to clarify that they're able 
 
 ## JUNE 26th-27th
 I uploaded the final structure of the codes i've been working on and following the stablished contribution format. Those codes are found in the TrialFuncs folder and are compose by the code structure for PSE plots and ROC curves, the impostor trials, the self correlation and total correlation plane computation. For this last one is convinient to keep checking the preprocessing structure for further steps on the project, however these days i'll be focusing on the standarization of ROC curves ploting in order to complete the package of standarize functions build by my partners.
+
+Hence, i build a function to standarize the ploting of the ROC curves, the TPR vs FNR curves and the FNR/TPR against the fraction of std used to form the acceptance region. The function that generates this curves is called  ROC.m and its structure is based on the function Performsimulation.m        
