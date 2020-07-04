@@ -27,7 +27,7 @@ Extracted frame | Detecting face | Cropped Face
 Images obtained by this method can be used to synthesize filters for face recognition. However, problems like double face detection or an important background pressence appeared on the processed images. 
 
 Bad detection |
-:-------------------------:|
+:--------------------:|
 ![](Results/NicolasWorkLog/Error.png)  |
 
 ## First problems
