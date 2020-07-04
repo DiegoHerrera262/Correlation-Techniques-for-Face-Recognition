@@ -10,7 +10,7 @@ As a first idea within Data Acquisition Automation, my work consisted in focus o
 
 Through this, I was first able to create a function that prints the number of frames of the considered video, namely, the Routines/Acquiring_data/Data_From_Previous_Video/Number_Of_Frames.m function. Then the next step was to develop the code to extract an specific frame of the video, which is implemented in Line 24 of Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m funtion. 
 
-Finally, merging the obtained results, a code which takes the video, extracts frames with a desired spacing and saves them in a specific folder was written. Namely, the Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m funtion. 
+Finally, merging the obtained results, a code which takes the video, extracts frames with a desired spacing and saves them in a specific folder was written, namely, the Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m funtion. 
 
 **Date:** 23/05/2020
 
@@ -19,6 +19,10 @@ Finally, merging the obtained results, a code which takes the video, extracts fr
 Code for detecting faces on the previously extracted frames was needed. Fortunately, there is a face detector implemented in MATLAB which I was able to use. Further, I found a code on the web which serves for the stated purposes. The page can be consulted through the url https://es.mathworks.com/help/vision/examples/face-detection-and-tracking-using-camshift.html and the code is attached as Routines/Acquiring_data/Data_From_Previous_Video/Original_Detect.m. This code is able to detect a face within a given image, draw a box to enclose it, and show the modified image. 
 
 The code was modified so that it was able not only to show the modified image, but also to cut the enclosed face and save it in a desired folder. Also a loop to read all the images from a specific folder and apply detection-cutting-saving process was implemented, resulting in  Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m function.
+
+Extracted frame | Detecting face | Cropped Face
+:-------------------------:|:-------------------------:|:-------------------------: 
+![](Results/NicolasWorkLog/Frame.png)  |  ![](Results/NicolasWorkLog/Detection.png) | ![](Results/NicolasWorkLog/Face.png)
 
 Images obtained by this method can be used to synthesize filters for face recognition. However, problems like double face detection or an important background pressence appeared on the processed images. 
 
