@@ -2,9 +2,9 @@
 
 Brief descriptions of the code developed by me are included at the end.
 
-**Date:** 22/05/2020
-
 ## First steps in Data Acquisition Automation
+
+**Date:** 22/05/2020
 
 As a first idea within Data Acquisition Automation, my work consisted in focus on a video of a person face, previously taked, and try to extract a specific number of frames. This took me to read further about the VideoReader object implemented in MATLAB.
 
@@ -12,9 +12,9 @@ Through this, I was first able to create a function that prints the number of fr
 
 Finally, merging the obtained results, a code which takes the video, extracts frames with a desired spacing and saves them in a specific folder was written, namely, the Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m funtion. 
 
-**Date:** 23/05/2020
-
 ## Detecting faces
+
+**Date:** 23/05/2020
 
 Code for detecting faces on the previously extracted frames was needed. Fortunately, there is a face detector implemented in MATLAB which I was able to use. Further, I found a code on the web which serves for the stated purposes. The page can be consulted through the url https://es.mathworks.com/help/vision/examples/face-detection-and-tracking-using-camshift.html and the code is attached as Routines/Acquiring_data/Data_From_Previous_Video/Original_Detect.m. This code is able to detect a face within a given image, draw a box to enclose it, and show the modified image. 
 
@@ -26,23 +26,27 @@ Extracted frame | Detecting face | Cropped Face
 
 Images obtained by this method can be used to synthesize filters for face recognition. However, problems like double face detection or an important background pressence appeared on the processed images. 
 
-**Date:** 27/05/2020
-
 ## First problems
+
+**Date:** 27/05/2020
 
 I focused on solving problems with double face detection and backgroung pressence derived from Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m function. I found no suitable solutions for backgroung pressence effect, and for double face detection it seems that discard the bad images was the only way.
 
-**Date:** 12/06/2020
+Bad detection |
+:-------------------------:|
+![](Results/NicolasWorkLog/Error.png)  |
 
 ## Exploring preview videos
+
+**Date:** 12/06/2020
 
 Instead of acquiring data through a previous video, which seems to have big mistakes, a second approach consisted in acquiring data with a live preview of the webcam. Looking for information on the internet, I found a useful package within MATLAB named Image Acquisition Toolbox Support Package for OS Generic Video Interface, which allows the user to pass a preview video from the webcam as a video object.
 
 The next step was to try to draw a rectangle on the preview so that the user can center the face and, thorught that, avoid the background presence problem. After an extensive search, I was able to synthesize this idea in the Routines/Acquiring_data/Data_From_Live_Video/Draw_Rectangle.m function.
 
-**Date:** 13/06/2020
-
 ## Acquiring data with preview videos
+
+**Date:** 13/06/2020
 
 Once Routines/Acquiring_data/Data_From_Live_Video/Draw_Rectangle.m function was written, the problem of acquiring data was a somewhat trivial work. Modifying the codes to acquire data from preview video instead of a previous videos was simple and enough for reach the goal. The modification consisted on taking the usual photos and then crop them with the rectangle used on the preview video.
 
