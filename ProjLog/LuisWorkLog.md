@@ -1,8 +1,77 @@
 # Work Log- Luis D.
 ***
+## MARCH-APRIL
+#### VANDER LUGT CORRELATOR-FIRST TRIALS
+The development of the project starts by the creation and implementation of basic codes on MATLAB,  which are based mainly on the Vander Lugt's correlator architecture. Thus, a first trial is made by using a target image and a single reference. The images are read thanks to MATLAB's image processing toolbox, transforming them into three-dimensional matrices, followed by a resize of the target with the function resize3,so that oprations withi matrices can be performed. Secondly, a conversion to grayscale is done by the usage of the function rgb2gray, which is represented by a two-dimensional matrix. Next, the Fourier transform is calculated for each image with the function fft2, then a filter created apart is applied to the target's FT and finally the correlation is obtained as the inverse FT of this last product. In addition, the correlation is ploted, but first the original result is shifted and scaled with a log function only for visualization purposes. For this first trial, a Classical Match filter and a Pahse only filter are used, where in terms of sharpnes the latter proves to give better results than the first one.
+
+ Target and Reference | CM filter Correlation result |  PO filter Correlation result
+:-------------------------:|:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCtrial1_Input.png)  |  ![](Results/No%20pre-processing/VLCtrial1_Corr_CMfilter.png) | ![](Results/No%20pre-processing/VLCtrial1_Corr_POfilter.png)
+
+A second trial is made following the same idea as before, however this time the code is implemented for a reference set of six images, which are all adjusted to have equal sizes during the reading step in order to avoid computation errors with their respective matrices. As a new feauture, in this example a linear combination composite filter with arbitrary coeficients is introduced and gives really good results despite not using a formal criteria to select the coeficients. Just as mentioned above, in order to have  a proper visualization of the correlation peak, it is necessary to shift and scale the original correlation result. 
+
+ Target and References | COM filter Correlation result 
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCtrial2_Input.png)  |  ![](Results/No%20pre-processing/VLCtrial2_Corr_COMfilter.png)
+
+Now, for the third trial, a peak to correlation energy criteria is applied to calculate the optimal coeficients, also, a modified version of the composite filter is implemented. This modification is done by a binarization of the previous filter, which is achieved with the application of a sign function to the composite filter's real part.
+Now, the process of finding the optimal coefients, using a PCE criteria, is executed (after reading the images) as follows:
+
+- The FT of each reference and the target are calculated as well as the "partial correlations", then the maximum value of each matrix is used to construct a vector whose components are the squared norm of those maxima, that is, the "Energy of each peak".
+- Separately, all the elements of the matrix |FT^-1{TR}|^2 are added, where R is the sum  of the references FT and T is the FT of the target, this would give the "Energy of the correlation plane" and with these two results, the PCE of each peak can be found. Therefore, the coefficients that make up the filter can be computed.
+
+Once the coeficients are calculated, the rest of the implementation is done as before, that is, constructing the new binarized filter, using it on the target and finally obtaining the correlation, thanks to a inverse fourier transform, which is ploted to properly analize the resulsts. As a last commentary, is fair to say that in this case  there is no need for a scalation of the correlation plane since the figure's size does not require it.
+
+![](Results/No%20pre-processing/VLCtrial3_Corr_BCOMfilter.png)
+
+#### VLC-FACE RECOGNITION (METHOD 1)
+Now, based on the trials done before for a MATLAB simulated VLC correlator, the next step is to apply those techniques as a face recognition program, and more specifically as a face verification tool. Therefore, the main objective of the implementation is to use the program to verify the identity of a particular person, which is done by comparing the subject's face with an image database and telling whether there's a match or not. Consequently, and just as before, the impementation is executed in different trials or stages, also the main structure for each code is conserved as well as the ploting methods.
+For the first trial, the code uses once again a target an a single reference image, both corresponing to the same person and by applying the classical match and phase only filters the results gives again a better performance for the second filter. Keep in mind, that this first stage is only to prove MATLAB's effectiveness for correlation operations and to verify if the main idea for the code's structure is correct, since both images are the same a correlation peak is clearly expected.
+
+ Target and Reference | CM filter Correlation result |  PO filter Correlation result
+:-------------------------:|:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCface_Input.png)  |  ![](Results/No%20pre-processing/VLCface_Corr_CMfilter.png) | ![](Results/No%20pre-processing/VLCface_Corr_POfilter.png)
+
+To carry out the second trial, the sample of references is expanded to ten images and once more, after doing the proper resizes, a linear combination composite filter with arbitrary coefficients is put into practice. However, this time the lack of rigor when choosing the linear combination weights proves to have a negative impact in the result, which can be seen in the correation plane as an irregular shaped surface with no correlation peak whatsoever. 
+In the third trial, the usage of the PCE criteria to find the constanst in the linear combination filter is needed. Hence, a binarized composite filter is construted just as described before for a ten reference set, the filter is applyied to the target and finally the correlation is calculated and ploted. Thus, an acceptable peak is obtained with a little of noise on its surroundings in the correlation plane, nevertheless it should be noted that this result only appears when the test image is exactly one of the reference images, since when another picture (not belonging to the reference sample) of the same subject is presented as target, the correlation vanishes and no proper peak is to be seen in the plane. 
+
+ Target and References | BCOM filter Correlation result 
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCface3_Input.png)  |  ![](Results/No%20pre-processing/VLCface3_Corr_BCOMfilter.png)
+
+Following this result, a fourth trial is executed on the same manner but usinig 20 references. This attempt, gives a good result just as  the previous one when the test image is also part of the reference set, but also in some special cases a peak appears when the test image is not part of the references, which leads to belive that increasing the amount of references solves the problem. However, even though having a bigger reference set surly improves the result, the problem with the verification in this case seems to be link to the fact of a non existing protocol to take the reference and test pictures, which could cause problems of intensity and aliniation when treating with them. Therefore, these protocols alongside a proper pre-processing stage of the images are to be created and implemented.    
+
+ Target is also in Reference set | BCOM filter correlation result
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCface4_Input.png)  |  ![](Results/No%20pre-processing/VLCface4_Corr_BCOMfilter.png)
+
+ Target isn't in Reference set | BCOM filter correlation result
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCface4_Input_Extra.png)  |  ![](Results/No%20pre-processing/VLCface4_Corr_BCOMfilter-Extra.png)
+![](Results/No%20pre-processing/VLCface4_Input_Extra2.png)  |  ![](Results/No%20pre-processing/VLCface4_Corr_BCOMfilter-Extra2.png)
+
+ 
+#### VLC-FACE RECOGNITION (METHOD 2)
+
+The idea is to take as reference images only the eyes and nose of the test subject, but since the references and the target image will now have different sizes, a mechanism should be used to avoid incongruences when operating with matrices and allowing these pertinent calculations to be performed between them in the code from MATLAB. Therefore, two options are propose and described bellow. The technique used to calculate the correlation remains the same and also, in both options the binarized filter is used since it has prove to be the most effective yet.
+
+As a first attempt to correct this drawback with sizes, zeros are added (with the function padarray) to the FT spectra of each reference so that the "Original Matrix" representing the transform remains in the center of the new one, which now does match in size with the spectrum of the target and correlation can be calculated. A test is performed for a single reference and subsequently for 10. In both cases, a region with multiple peaks located non-uniformly, with different intensities and lengths is obtained in the correlation plane, making it difficult to make a reliable interpretation.
+
+ Target and References | BCOM filter correlation result
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCeyes4_Input.png)  |  ![](Results/No%20pre-processing/VLCeyes4_Corr_BCOMfilter.png)
+    
+The second way tried to solve the problem with the sizes is carried out analogously to the first, but this time, the zeros are added directly to the matrix that represents the reading of the reference image. Just as before the method is implemented first to a single reference and then to 10 references, resulting in both cases a irreguar surface with no clear interpretation on the correlation plane.
+
+Target and References | BCOM filter correlation result
+:-------------------------:|:-------------------------:
+![](Results/No%20pre-processing/VLCeyes5_Input.png)  |  ![](Results/No%20pre-processing/VLCeyes5_Corr_BCOMfilter.png)
+
+This method, using only the eyes seems to give really bad results. Thus we decided to focus only on the first one from now on.
+***
 ## MAY 21st 2020.
 Today the work was mainly focused on finishing the update of github's wiki page in terms of the VLC correlator and face recognition codes developed to date and their respective implementations. The update contains the most important results obtained at the moment alongside the issues presented and the discussions and ideas that have come up to solve them.
-Additionally, the already constructed function aquire_data.m was implemented to get the Reference pictures in an easier manner, since up until now i've been taking, chopping and storing the photos one by one, which is a very unproductive to do so.    
+Additionally, the already constructed function aquire_data.m was implemented to get the Reference pictures in an easier manner, since up until now i've been taking, chopping and storing the photos one by one, which is a very unproductive manner to do so.    
 ***
 ## MAY 22nd 2020
 Today my attempt was to check how to use the normalize function as an image preprocessing technique to solve problems with brightness and intensituy on the picture. At first i noticed that applying the function directly after reading the image gives an error which also appears when trying to implement the normalization to a gray scaled picture. The error is:
