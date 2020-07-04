@@ -28,7 +28,7 @@ Images obtained by this method can be used to synthesize filters for face recogn
 
 Bad detection |
 :--------------------:|
-![](Results/NicolasWorkLog/Error.png)  |
+![](Results/NicolasWorkLog/Error.png = 100x100)  |
 
 ## First problems
 
