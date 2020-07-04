@@ -26,15 +26,21 @@ Extracted frame | Detecting face | Cropped Face
 
 Images obtained by this method can be used to synthesize filters for face recognition. However, problems like double face detection or an important background pressence appeared on the processed images. 
 
+Bad detection |
+:-------------------------:|
+![](Results/NicolasWorkLog/Error.png)  |
+
 ## First problems
 
 **Date:** 27/05/2020
 
-I focused on solving problems with double face detection and backgroung pressence derived from Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m function. I found no suitable solutions for backgroung pressence effect, and for double face detection it seems that discard the bad images was the only way.
+I focused on solving problems with double face detection and backgroung pressence derived from Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m function. I tried a second application of Routines/Acquiring_data/Data_From_Previous_Video/Data_From_Video.m function with nice results in decreasing background presence for some pictures.
 
-Bad detection |
+Improving backgroung effect |
 :-------------------------:|
-![](Results/NicolasWorkLog/Error.png)  |
+![](Results/NicolasWorkLog/Face2.png)  |
+
+ However, the double detection problem got worse. I found no suitable solutions for backgroung pressence effect, and for double face detection it seems that discard the bad images was the only way.
 
 ## Exploring preview videos
 
@@ -44,6 +50,10 @@ Instead of acquiring data through a previous video, which seems to have big mist
 
 The next step was to try to draw a rectangle on the preview so that the user can center the face and, thorught that, avoid the background presence problem. After an extensive search, I was able to synthesize this idea in the Routines/Acquiring_data/Data_From_Live_Video/Draw_Rectangle.m function.
 
+Rectangle on webcam preview |
+:-------------------------:|
+![](Results/NicolasWorkLog/Rectangle.png)  |
+
 ## Acquiring data with preview videos
 
 **Date:** 13/06/2020
@@ -51,6 +61,10 @@ The next step was to try to draw a rectangle on the preview so that the user can
 Once Routines/Acquiring_data/Data_From_Live_Video/Draw_Rectangle.m function was written, the problem of acquiring data was a somewhat trivial work. Modifying the codes to acquire data from preview video instead of a previous videos was simple and enough for reach the goal. The modification consisted on taking the usual photos and then crop them with the rectangle used on the preview video.
 
 Once I tried the function, an important problem appeared. The video object created with the preview video, passes the video in a format which does not allow to see the desired colors. The problem was solved including a code line so that the desired format is specified, namely, RGB format.
+
+Preview | Cropped picture | 
+:-------------------------:|:-------------------------:|
+![](Results/NicolasWorkLog/Rectangle.png)  |  ![](Results/NicolasWorkLog/Livedata.png) | 
 
 ---------------------------------------------------------------------------
 

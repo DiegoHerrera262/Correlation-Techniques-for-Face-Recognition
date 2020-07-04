@@ -8,7 +8,7 @@
 %              Suggested values width = 200, height = 200
 %                               xsupleft = 220, ysupleft = 80
 
-function live_data(cam, num_samples,rectange,dirname)
+function live_data(num_samples,rectange,dirname)
 
 mkdir(dirname);
      
