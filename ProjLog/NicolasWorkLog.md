@@ -66,6 +66,11 @@ Preview | Cropped picture |
 :-------------------------:|:-------------------------:|
 ![](Results/NicolasWorkLog/Rectangle.png)  |  ![](Results/NicolasWorkLog/Livedata.png) | 
 
+## Adding my database
+
+**Date:** 05/07/2020
+I take 200 pictures for my database using our acquiring data routines.
+
 ---------------------------------------------------------------------------
 
 Descriptions of MATLAB codes **Data_From_Video.m**, **Detect_Face.m**, **Number_Of_Frames.m** and **Original_Detect.m** are included.
