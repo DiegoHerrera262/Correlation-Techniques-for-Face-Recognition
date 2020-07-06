@@ -165,7 +165,7 @@ for k=1:100                        %We use a "for" in case that the first range 
    end
 end
 
-tol %Final tolerance used.
+tol; %Final tolerance used.
 FPR(index_Numb) %Now we want to see the FPR values corresponfing to those indeces
 %PLOT:
  EER=max(FPR(index_Numb)).*ones(1,length(FPR));%Equal error rate->when FNR=FPR.
