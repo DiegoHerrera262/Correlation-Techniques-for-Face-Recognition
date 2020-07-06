@@ -20,16 +20,11 @@ function usedImages = performSimulation...
     %% Definition of True data location
     trueLocation = [trueFolder MatchName];
 
-    %% Defnition of False data location
+    %% Definition of False data location
     falseLocation = [falseFolder MatchName];
 
     %% Read True images on folder
     Data = dir(trueLocation);      % Read data from folder
-    basetrue = Data.folder;
-
-    %% Read False images on folder
-    Fake = dir(falseLocation);
-    basefalse = Fake.folder;
     
     %% Print folders used
     disp(['Used as true data ' trueLocation]);
@@ -47,46 +42,12 @@ function usedImages = performSimulation...
     end
 
     %% Compute PSR and Peak location for True Data
-    peakloc = zeros(numel(Data),2);
-    psrvals = zeros(numel(Data),1);
-    idx = zeros(numel(Data),1);
-    for k = 1:numel(Data)
-        % Extract real image index
-        s1 = split(Data(k).name,'sample');
-        s2 = split(char(s1(2)),'.');
-        idx(k) = uint16(str2double(char(s2(1))));
-        % Read training-test image
-        filename = [basetrue '/' Data(k).name];
-        im = imread(filename);
-        % Compute correlation
-        corrplane = CFxcorr(im,truedirname,filtername);
-        % Compute PSE and Peak Location
-        [psr, location] = PSR(corrplane);
-        psrvals(k) = psr;
-        peakloc(k,1) = location(1);
-        peakloc(k,2) = location(2);
-    end
-
+    [psrvals, peakloc, idx] = ...
+        PSR_Database(truedirname,truedirname,filtername);
+    
     %% Compute PSE and Peak Location for False Data
-    fake_peakloc = zeros(numel(Fake),2);
-    fake_psrvals = zeros(numel(Fake),1);
-    fake_idx = zeros(numel(Fake),1);
-    for k = 1:numel(Fake)
-        % Extract real image index
-        s1 = split(Data(k).name,'sample');
-        s2 = split(char(s1(2)),'.');
-        fake_idx(k) = uint16(str2double(char(s2(1))));
-        % Read training-test image
-        filename = [basefalse '/' Fake(k).name];
-        im = imread(filename);
-        % Compute correlation
-        corrplane = CFxcorr(im,truedirname,filtername);
-        % Compute PSE and Peak Location
-        [psr, location] = PSR(corrplane);
-        fake_psrvals(k) = psr;
-        fake_peakloc(k,1) = location(1);
-        fake_peakloc(k,2) = location(2);
-    end
+    [fake_psrvals, ~, fake_idx] = ...
+        PSR_Database(truedirname,falsedirname,filtername);
 
     %% Compute mean values of PSE for both sets
     meanT = mean(psrvals); meanF = mean(fake_psrvals);
@@ -95,7 +56,7 @@ function usedImages = performSimulation...
     meanFalse = meanF * ones(size(numRange));
 
     %% Plot PSR Results
-    figure('Name',['Simulación Reconocimiento con ' filtername]);
+    figure('Name',['Simulation Verification with ' filtername]);
     subplot(1,2,1);
     scatter(idx,psrvals,'o','MarkerFaceColor','b'); hold on;
     scatter(fake_idx,fake_psrvals,'o','MarkerFaceColor','r'); hold on;
@@ -105,21 +66,21 @@ function usedImages = performSimulation...
         'FontSize',15,'Color','k');
     text(80,meanF,['PSE_F = ' num2str(meanF,3)],...
         'FontSize',15,'Color','k');
-    xlabel('No. Figura');
+    xlabel('No. Figure','FontSize',15);
     ylabel('PSE');
-    title(['PSE con referencia a imagen ' num2str(...
-        refimag)]);
+    title(['PSE as refered to image ' num2str(...
+        refimag)],'FontSize',15);
     legend('True','False','Location','best');
 
     %% Plot Location Results
     subplot(1,2,2);
     scatter(idx,peakloc(:,1),...
         'o','MarkerFaceColor','b'); hold on;
-    scatter(fake_idx,peakloc(:,2),...
+    scatter(idx,peakloc(:,2),...
         'o','MarkerFaceColor','r'); hold on;
-    xlabel('No. Figura');
-    ylabel('Peak Location');
-    title('Localización Máximo');
+    xlabel('No. Figure','FontSize',15);
+    ylabel('Peak Location','FontSize',15);
+    title('Peak Location in Correlation Plane','FontSize',15);
     legend('Corrd. y','Coord. x','Location','best');
     
 end

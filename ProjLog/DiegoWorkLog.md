@@ -8,7 +8,7 @@ This log is written by Diego Herrera, *insert other names*. It resumes the learn
 
 Diego Herrera read chapter 15 of Trussell's book on Image, Video and Biomedical Signal Processing from Academic Press Library (Vol. 4) and found out that biometric recognition can be performed using correlation filters. The principle is quite straightforward, and he includes an scheme of the algorithm in the book.
 
-![](images/BasicAlgorithm.png)
+![](ProjLog/Results/README/demoAlgorithm.png)
 
 The fundamental idea is the following:
 1. A set of training images with the desired feature is generated, and all are preprocessed.
@@ -106,10 +106,6 @@ It is important to note that images occupy quite a lot of memory. So the product
 $$(D^{-1}X)_{ij} = D_{i}X_{ij}$$
 
 The matrix products are efficiently computed using MATLAB, they take around 0.5 seconds. However, this filter is not suitable for biometric verification in live video. After that, the function saves the filter for further use. A set of 500 images was taken using the image acquisition routine, and a MACE filter was computed. A test of the performance was carried out in the file **troubleshoot.m**. The results are shown bellow.
-
-![](images/test2.png)
-![](images/test3.png)
-![](images/test1.png)
 
 The results show that the better the match, in principle, the higher the peak in the correlation output. Also, the peak is far less spread with the MACE filter than with the sole correlation.
 
