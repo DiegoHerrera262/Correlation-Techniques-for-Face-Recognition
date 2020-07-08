@@ -18,25 +18,26 @@ The main objective of the project is to design and implement a correlation-based
 
 ## How to use the routines
 
-For a detailed description of the theoretical and experimental reasons for the defined protocol of routines usage see the wiki page of the project. The protocol has the following steps:
+For a detailed description of the theoretical and experimental reasons for the defined protocol of routines usage see the [wiki page](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/wiki) of the project. The protocol has the following steps:
 
 * MATLAB environment setup.
 * Image database acquisition.
 * Image preprocessing.
 * Filter synthesis.
 * Performance simulation.
+* Compute Performance Indicators.
 
 Those are discussed further in the following subsections.
 
 ## MATLAB environment setup
 
-Clone this repository to a folder in your local memory drive. Download MATLAB development environment from the official website and add the following add-ons from the official website:
+Clone this repository to a folder in your local memory drive. Download MATLAB development environment from the official website and download the following add-ons from the official website:
 
 * **Image Acquisition Toolbox** from MathWorks
 * **Image Processing Toolbox** from MathWorks
 * **Matlab Support Package for USB webcams** from MathWorks
 
-We suggest using MATLAB 2019b version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
+We suggest using MATLAB 2017a version or later. The toolboxes above are necessary for subsequent steps of the protocol. Make sure they are installed before carrying on. On the MATLAB development environment open the root folder of the cloned repository in your PC. The MATLAB current folder window should look something like bellow:
 
 <p align="center">
   <img width="570" height="300" src="ProjLog/Results/README/demoEnvironment.png">
@@ -112,7 +113,7 @@ Once connection to webcam device is successfully stablished, execute:
 acquire_data(num_samples,cam,subject_name)
 ```
 
-* ```num_samples``` is the number of snapshots to be stored. It is suggested that exactly 200 samples be stored, however, user may decide. This does not have to do with filter performance, but ensures consistency when carrying out performance simulations.
+* ```num_samples``` is the number of snapshots to be stored. It is suggested that exactly 199 samples be stored. This does not have to do with filter performance, but ensures consistency when carrying out performance simulations.
 
 * ```cam``` is a webcam connection in MATLAB workspace.
 
@@ -147,11 +148,11 @@ Where ```Subject``` is a string with the name of the subject whose raw images ar
   <img width="660" height="300" src="ProjLog/Results/README/demoPrepro.png">
 </p>
 
-**NOTE**: *For more conceptual and procedural details of this part of the protocol visit the wiki of the project repository*.
+**NOTE**: *For more conceptual and procedural details of this part of the protocol visit the [wiki](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/wiki/Methodology) of the project repository*.
 
 ## Filter synthesis
 
-This is the core step of the project. Chosen filters include HBCOM, MACE and MINACE. This are computed performing minimization algorithms. For more conceptual details visit the wiki page of the repository. The three routines:
+This is the core step of the project. Chosen filters include HBCOM, MACE and MINACE. This are computed performing minimization algorithms. For more conceptual details visit the [wiki page](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/wiki/Linear-Filters) of the repository. The three routines:
 
 * **HBCOM_Filter**
 * **MACE_Filter**
@@ -283,6 +284,57 @@ The mean values of PSR metric are shown, for both true and impostor class images
 3. Determine correlation between peak location and actual spatial location of a face.
 
 **NOTE:** *This routine might be of great help for those users with little experience with MATLAB. It is advised that those users examine this routine in great extent. For more experienced users, the metric and plane-computation routines are the most fundamental ones.*
+
+The main objective of this routine is to use it as a visual guide for filter training. The filter-building functions already incorporate image registration, but leave for the user the selection of the base image for filter training and the number of training images used to build the filter. This parameters affect the performance, and the user should select them carefully so as to produce a separation between classes as large as possible in terms of PSR metric. A special routine to assist the user called ```idealTrainingParameters``` is included. It returns the image over the true class set that the produces the highest separation between classes in terms of PSR metric for a given number of training images in the filter. Its usage is as follows:
+
+```Matlab
+[irefimag, indicator] = idealTrainingParameters(subject,numsamp,filttype)
+```
+
+* ```subject``` is the name of the folder of true-class images to be used in filter construction, i.e. the subject name.
+* ```numsamp``` is the number of images to be used inside the filter.
+* ```filttype``` is the type of filter to be built (e.g. HBCOM, MACE, MINACE).
+* ```irefimag``` is an integer value that corresponds to the index of the image in the ```subject``` database that produces the larger separation of true-class and false-class for the datasets in ```ProcessedDatabase```.
+* ```indicator``` is a double vector with the separation in PSR for the two classes when each of the images in the true-class dataset is used as a base for the synthesis.
+
+**NOTE:** This routine is computationally intensive and might take several minutes to produce the desired output. It is advised that the user first tries ```performSimulation``` to assess visually if a particular base image and number of sample produces enough class discrimination. For HBCOM filters, a set of 4 training samples produces high discrimination, and for MACE filters, 2 is sometimes good enough. However, the selection of the base or reference image is more involved, and if a few random guesses don't produce high discrimination, then using ```idealTrainingParameters``` may save some time.
+
+## Compute Performance Indicators.
+
+Once the capabilities of a particular correlation filter are established and training is carried out, it is important to compute performance indicators. In the present application, the main objective is achieved by using the PSR metric of a correlation plane and a classifier algorithm to establish the presence of a biometric of interest via a binary decision. By thresholding the PSR metric, a classifier determines if the biometric is present in the image plane or not. For a given threshold metric value, there are 4 important quantities that indicate the capabilities of the algorithm for performing identity verification:
+
+1. **True Positive Rate (TPR)**.
+1. **False Negative Rate (FNR)**.
+1. **False Positive Rate (FPR)**.
+1. **True Negative Rate (TNR)**.
+
+For a detailed description of the meaning and analysis of these metrics see the [wiki page](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/wiki/Performance-Analysis). There are routines that compute those indicators, and their names are identical to the acronyms. The usage is quite straightforward and is illustrated thusly:
+
+```Matlab
+tpr = FNR(subject,filttype,threshold)
+```
+
+* ```tpr``` is a double variable that corresponds to the **TPR** of the classifier with a *threshold metric value* ```threshold```.
+* ```filttype``` is the type of filter to be built (e.g. HBCOM, MACE, MINACE).
+
+Those indicators are more commonly reported in the so called **Confusion matrix**. For more conceptual details see the [wiki page](https://github.com/DiegoHerrera262/Correlation-Techniques-for-Face-Recognition/wiki/Performance-Analysis). There is a routine that computes this matrix:
+
+```Matlab
+ConfMat = ConfusionMatrix(subject,filttype,threshold)
+```
+
+* ```ConfMat``` is the confusion matrix associated to the particular classifier.
+
+The rest of the variables have the same meaning as above. A good classifier has a confusion  matrix that resembles the identity. To chose a good value for the threshold metric value, a ROC space analysis should be carried out. The function ```ROC_Space``` generates a plot of the ROC space of the classifier algorithm when the threshold value is varied. It also returns the threshold metric values that produce a performance nearest to the ideal behavior. It is used as follows:
+
+```Matlab
+idealThreshold = ROC_Space(subject,filttype)
+```
+
+* ```idealThreshold``` is a double vector that contains the the threshold metric values that are nearest to the ideal behavior.
+
+The rest of the variables have the seme meaning as above. By using this routines the user can assess quantitatively the discrimination capacity of the correlation techniques treated in the project.
+
 
 ## Conclusion
 

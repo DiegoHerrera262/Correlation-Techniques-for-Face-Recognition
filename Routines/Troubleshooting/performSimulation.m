@@ -1,4 +1,4 @@
-%% Program for Assesing MACE Filter Performance in Trainning set
+%% Program for Assesing MACE Filter Performance in Training set
 % Date: 02 - 06 - 20
 % Author: Diego Herrera
 % Description: In this program a single MACE filter is computed
