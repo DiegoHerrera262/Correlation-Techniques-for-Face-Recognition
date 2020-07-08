@@ -105,6 +105,7 @@ Images Names from Preprocessed Database with Wiener Filter|
 ***
 ## Fixed Pattern Noise Reduction
 **Date:** June 13th 2020
+
 As it was mentioned before, webcams add noise due to exposure and *ISO* speed. Fixed pattern noise is caused by long exposure and is easy recognized as a result of intensity peaks that surpasses random noise. However, it can be easily corrected by subtracting a 'dark' picture from the webcam.
 
 ```
@@ -122,5 +123,18 @@ Original Sample | Enhanced Sample | FPN Sample
 *** 
 ## Testing Preprocessing Protocol with HBCOM Filter
 **Date:** June 18th 2020
+
+As the preprocessing protocol was defined, it is expected to try its improvements over the filters. In the folloring images, it is possible to appreciate the performance of HBCOM filter for different combinations of preprocessing tools.
+
+1 | 1 - 2 | 
+:-------------------------:|:-------------------------:|
+![](Results/AndresWorkLog/Andres_im_HBCOM.png)  |  ![](Results/AndresWorkLog/Andres_im_hist_HBCOM.png) | 
+1 - 3 | 1 - 2 - 3 | 
+![](Results/AndresWorkLog/Andres_im_ad_HBCOM.png)  |  ![](Results/AndresWorkLog/Andres_im_his_ad_HBCOM.png) | 
+    
+It is important to mention that all preprocessed images include Wiener filter treatment. Also, the number above stands for the preprocessing tool as is shown below:
+  1. ```imadjust()```
+  2. ```histeq()```
+  3. ```adapthisteq()```
 
 ***
