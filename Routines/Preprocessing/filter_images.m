@@ -23,9 +23,9 @@ function filter_images(dirname)
             RGB = imread(strcat(Path,'/',images(k).name));
             I = rgb2gray(RGB);
             I1 = imadjust(I);
-            I2 = histeq(I1);
-            I3 = adapthisteq(I2);  
-            I4 = wiener2(I3,[5 5]);
+            I2 = adapthisteq(I1);  
+            I = wiener2(I2,[5 5]);
+            I4 = imbinarize(I,0.4);          % Binarize image
             % Save the image
             where = [address 'filtered_' images(k).name];
             imwrite(I4,where);
