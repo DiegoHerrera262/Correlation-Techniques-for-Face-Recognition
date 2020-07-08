@@ -500,3 +500,35 @@ ROC curve|FNR/TPR vs std|
 ![](Results/WorkLogResults-Luis/ROC_type1_Diego_German_HBCOM_26.png)|![](Results/WorkLogResults-Luis/FNR_TPR_RATIO_Diego_German_HBCOM_26.png)
 
 As one can se, in all three cases the FNR/TPR vs STD fraction curve gives really good results which show a mostly rapidly decay behaviour, where at first sight  a good value to define the thereshold seems to be around 0.5 and 1 times the std for the MACE and MINACE filters, for the BCOM filter the value appears to be between 1 and 1.5. On the other hand, by looking at the ROC curves one can see that for these new type of preprocessing and impostor/real image sets, the BCOM filter sitil performs really good since a false positive is hardly detected. Conversely, the ROC curves for other filters do exhibit a curve, meaning that is easier to get a false postive for certain theresholds, also, both plots show a very similar behaviour and their EER values are located in the same range ([0.1,0.2]).      
+
+***
+## JUL 7th 2020
+Today, i performed a little modification to the function filter_images.m, where i added some elements to the preprocessing stage which seem to give really good results, specially for the BCOM filter, which is the one i've been working on during this project. Now, the results given by the HBCOM filter (used as a fix filter made out of 10 sample images) for this new preprocessing method and applied using the function HBCOM_Filter.m are shown bellow.
+
+![](Results/WorkLogResults-Luis/Final_preprocessing.png)
+
+As one can see, this preprocessing not only helps to get a satisfactory discrimination, but also leads to a significantly better correlation plane than my previous attempts. Aditionally, remember that contrary to my old codes, the function HBCOM_Filter.m developed by my partners, designs a fix filter computing the linear combination weights from a stablished test sample and the linear combination is also done with a unique number of reference images, so it can be applied to any image outside the set used to its construction, just like in the example above.
+
+Therefore, since the true class used on the example gives a good correlation plane despite not belonging to the training set, this one more indicator that the preprocessing technique employed is reliable. The algorithim implemented is done as follows:
+
+
+```Matlab
+%% Filters each Image
+    for k = 1:length(images)
+        cond = (strcmp(images(k).name,'.') | ... 
+            strcmp(images(k).name,'..')) | ...
+            contains(images(k).name,'._');
+        if ~cond 
+        RGB = imread(strcat(Path,'/',images(k).name));
+        I = rgb2gray(RGB);
+        I=imadjust(I); 
+        I= adapthisteq(I);
+        I= wiener2(I,[5 5]);
+         I=im2bw(I,0.4); %Binarize image
+        I=bwlabel(I);
+        % Save the image
+        where = [address 'filtered_' images(k).name];
+        imwrite(I,where);
+        end
+    end
+ ```
