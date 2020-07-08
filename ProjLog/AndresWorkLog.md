@@ -39,7 +39,7 @@ where ```imadjust()``` corrects intensity values, ```histeq()``` enhances contra
 ## Random Noise Reduction with Wiener Filter
 **Date:** May 31st 2020
 
-As it was mentioned before, despite of adjusting image properties such as brightness or contrast, for an optimal preprocessing protocol it is necessary to attemp to reduce noise produce due to exposure and ISO speed from webcams or lack of brightness. The Wiener filter is used to produce a filtered signal from a noisy and stationary signal. The Matlab function ```wiener2()``` takes advantage of this propertie by stimating the local image mean and standard deviation from a selected neighbourhood. 
+As it was mentioned before, despite of adjusting image properties such as brightness or contrast, for an optimal preprocessing protocol it is necessary to attemp to reduce noise produce due to exposure and *ISO* speed from webcams or lack of brightness. The Wiener filter is used to produce a filtered signal from a noisy and stationary signal. The Matlab function ```wiener2()``` takes advantage of this propertie by stimating the local image mean and standard deviation from a selected neighbourhood. 
 
 The Wiener filter is appropriate for treating *random noise* ocasioned by intensity fluctuations. Particularly in this project, a 5-pixel neighbourhood is optimal due to the standard size of pictures 308x267. Downwards, it is shown a comparison between an image and its enhanced and filtered result. 
 
@@ -94,26 +94,33 @@ Now that images are treated, it is needed to save them with the appropriate name
 ```
 Here it is a example of the saving process.
 
-![](Results/AndresWorkLog/folders_name.png)  
+Directory Names from Preprocessed Databases|
+:-------------------------:|
+![](Results/AndresWorkLog/folders_name.png)
 
+Images Names from Preprocessed Database with Wiener Filter|
+:-------------------------:|
 ![](Results/AndresWorkLog/pictures_name.png)  
 
 ***
 ## Fixed Pattern Noise Reduction
 **Date:** June 13th 2020
+As it was mentioned before, webcams add noise due to exposure and *ISO* speed. Fixed pattern noise is caused by long exposure and is easy recognized as a result of intensity peaks that surpasses random noise. However, it can be easily corrected by subtracting a 'dark' picture from the webcam.
 
+```
+    I = rgb2gray(RGB);
+    I2 = I - I0;
+    I3 = imadjust(I2);
+```
+
+where ```I0``` stands for the 'dark' image taken. The comparison between the samples by applying a *FPN* correction is shown below.
+
+Original Sample | Enhanced Sample | FPN Sample
+:-------------------------:|:-------------------------:|:-------------------------:
+![](Results/AndresWorkLog/sample.png)  |  ![](Results/AndresWorkLog/enhanced_sample.png) |  ![](Results/AndresWorkLog/FPN_sample.png)
+    
 *** 
 ## Testing Preprocessing Protocol with HBCOM Filter
 **Date:** June 18th 2020
-
-***
-## June 22nd 2020
-
-
-***
-## June 30th 2020
-
-***
-## July 5th 2020
 
 ***
