@@ -57,7 +57,7 @@ function usedImages = performSimulation...
 
     %% Plot PSR Results
     figure('Name',['Simulation Verification with ' filtername]);
-    subplot(1,2,1);
+    % subplot(1,2,1);
     scatter(idx,psrvals,'o','MarkerFaceColor','b'); hold on;
     scatter(fake_idx,fake_psrvals,'o','MarkerFaceColor','r'); hold on;
     plot(numRange,meanTrue,'LineWidth',2.0,'Color','b'); hold on;
