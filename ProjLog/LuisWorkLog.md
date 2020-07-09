@@ -503,7 +503,13 @@ As one can se, in all three cases the FNR/TPR vs STD fraction curve gives really
 
 ***
 ## JUL 7th 2020
-Today, i performed a little modification to the function filter_images.m, where i added some elements to the preprocessing stage which seem to give really good results, specially for the BCOM filter, which is the one i've been working on during this project. Now, the results given by the HBCOM filter (used as a fix filter made out of 10 sample images) for this new preprocessing method and applied using the function HBCOM_Filter.m are shown bellow.
+Today, i performed a little modification to the function filter_images.m, where i added some elements to the preprocessing stage which seem to give really good results, specially for the BCOM filter, which is the one i've been working on during this project. Specifically, i performed 2 new types of preprocessing and compare it to the one  that has been done with the function filter_images.m until now, this conparison is shown  bellow 
+
+![](Results/WorkLogResults-Luis/prep.png)
+
+As shown in the figure above, the  two new methods (the middle and the right one) give better results for the correlation peak. Hence, we decided to choose the method on the right due to a better performance and quality on the peak and PSR values.
+
+Now, the results (for the new preprocessing technique) given by the HBCOM filter (used as a fix filter made out of 10 sample images) for this new preprocessing method and applied using the function HBCOM_Filter.m are shown bellow.
 
 ![](Results/WorkLogResults-Luis/Final_preprocessing.png)
 
@@ -532,3 +538,59 @@ Therefore, since the true class used on the example gives a good correlation pla
         end
     end
  ```
+Note that an important feature on this  preprocessing is the inclusion of a binarization.
+
+***
+## JUL 8th 2020
+Today, we applied the new technique to the construction of the MACE filters, however we encounter major problems when using the method for this filter, obtaining deficient ROC curves in contrast to the HBCOM filter, which behaves really good for this technique. Therefore, after some trials we found that the best preprocessing for the MACE filter is done like: 
+
+```Matlab
+%% Filters each Image
+    for k = 1:length(images)
+        cond = (strcmp(images(k).name,'.') | ... 
+            strcmp(images(k).name,'..')) | ...
+            contains(images(k).name,'._');
+        if ~cond 
+        RGB = imread(strcat(Path,'/',images(k).name));
+        I = rgb2gray(RGB);
+        I= wiener2(I,[5 5]);
+        % Save the image
+        where = [address 'filtered_' images(k).name];
+        imwrite(I,where);
+        end
+    end
+ ```
+Additionally, we constructed new HBCOM filters for this method and even though the peaks are not as brighter and intense as before, its discrimination still is quite terrific. Futhermore, the preprocessing method solves large problems we previously had for the  MACE filter, improving its discrimination capability and given better results, therefore we decided to employ this last preprocessing technique since it enhances the general results of the work. Finally, as a way to show the difference between both methods we compare their ROC curves for 4 different sets of images.
+
+### HBCOM
+##### With binarization
+Set 1|set 2|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_Space_for_Andres_HBCOM_BIN.png)|![](Results/WorkLogResults-Luis/ROC_Space_for_Diego_HBCOM_BIN.png)
+Set 3|Set 4|
+![](Results/WorkLogResults-Luis/ROC_Space_for_German_HBCOM_BIN.png) |![](Results/WorkLogResults-Luis/ROC_Space_for_Nicolas_HBCOM_BIN.png)
+##### Only with wiener
+
+Set 1|set 2|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_Space_for_Andres_HBCOM.jpeg)|![](Results/WorkLogResults-Luis/ROC_Space_for_Diego_HBCOM.jpeg)
+Set 3|Set 4|
+![](Results/WorkLogResults-Luis/ROC_Space_for_German_HBCOM.jpeg) |![](Results/WorkLogResults-Luis/ROC_Space_for_Nicolas_HBCOM.jpeg)
+
+
+### MACE
+##### With binarization
+
+Set 1|set 2|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_Space_for_Andres_MACE_BIN.png)|![](Results/WorkLogResults-Luis/ROC_Space_for_Diego_MACE_BIN.png)
+Set 3|Set 4|
+![](Results/WorkLogResults-Luis/ROC_Space_for_German_MACE_BIN.png) |![](Results/WorkLogResults-Luis/ROC_Space_for_Nicolas_MACE_BIN.png)
+
+##### Only with wiener
+
+Set 1|set 2|
+:-------------------------:|:-------------------------:
+![](Results/WorkLogResults-Luis/ROC_Space_for_Andres_MACE.jpeg)|![](Results/WorkLogResults-Luis/ROC_Space_for_Diego_MACE.jpeg)
+Set 3|Set 4|
+![](Results/WorkLogResults-Luis/ROC_Space_for_German_MACE.jpeg) |![](Results/WorkLogResults-Luis/ROC_Space_for_Nicolas_MACE.jpeg)
