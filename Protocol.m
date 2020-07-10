@@ -116,6 +116,6 @@ disp('Stage 5a Completed: Finished Conf. Mat Computations for MACE');
 ConfMatsHBCOM = cell(numel(Subs),1);
 for k = 1:numel(Subs)
     ConfMatsHBCOM{k} = ...
-        ConfusionMatrix(Subs{k},'MACE',thresholdsHBCOM(k));
+        ConfusionMatrix(Subs{k},'HBCOM',thresholdsHBCOM(k));
 end
 disp('Stage 5b Completed: Finished Conf. Mat Computations for HBCOM');
