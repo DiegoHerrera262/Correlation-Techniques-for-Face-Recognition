@@ -333,8 +333,9 @@ idealThreshold = ROC_Space(subject,filttype)
 
 * ```idealThreshold``` is a double vector that contains the the threshold metric values that are nearest to the ideal behavior.
 
-The rest of the variables have the seme meaning as above. By using this routines the user can assess quantitatively the discrimination capacity of the correlation techniques treated in the project.
+The rest of the variables have the same meaning as above. By using this routines the user can assess quantitatively the discrimination capacity of the correlation techniques treated in the project.
 
+**NOTE:** A program that carries out all the Protocol steps over all datasets is in the file ```Protocol.m```. User must be careful with its use. Specially concerning the training process. The important steps of the process are divided in blocks (string ```%%```). Execution by steps is advised. If the user does not how to execute MATLAB programs by blocks, documentation can be found anywhere else.
 
 ## Conclusion
 
