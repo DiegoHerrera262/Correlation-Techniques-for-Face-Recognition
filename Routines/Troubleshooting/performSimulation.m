@@ -51,13 +51,14 @@ function usedImages = performSimulation...
 
     %% Compute mean values of PSE for both sets
     meanT = mean(psrvals); meanF = mean(fake_psrvals);
+    stdT = std(psrvals);
     numRange = 1:0.1:200;
     meanTrue = meanT * ones(size(numRange));
     meanFalse = meanF * ones(size(numRange));
 
     %% Plot PSR Results
     figure('Name',['Simulation Verification with ' filtername]);
-    % subplot(1,2,1);
+    subplot(1,2,1);
     scatter(idx,psrvals,'o','MarkerFaceColor','b'); hold on;
     scatter(fake_idx,fake_psrvals,'o','MarkerFaceColor','r'); hold on;
     plot(numRange,meanTrue,'LineWidth',2.0,'Color','b'); hold on;
@@ -68,6 +69,7 @@ function usedImages = performSimulation...
         'FontSize',15,'Color','k');
     xlabel('No. Figure','FontSize',15);
     ylabel('PSE');
+    ylim([0 meanT+1.5*stdT]);
     title(['PSE as refered to image ' num2str(...
         refimag)],'FontSize',15);
     legend('True','False','Location','best');
