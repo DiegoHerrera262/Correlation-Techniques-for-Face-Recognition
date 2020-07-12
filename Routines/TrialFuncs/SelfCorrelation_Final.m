@@ -32,21 +32,20 @@ img_t=imread(Test_picture);img_t=imresize3(img_t,size(img_r{1}));
 %REFERENCES IMAGES
 Ir=cell(length(img_r),1); %Initialize 
 for k=1:length(img_r) 
-Ir{k}=rgb2gray(img_r{k}); %Note that each Ir{k} is a matrix.
-Ir{k}=im2double(Ir{k}); %Make image a double
-Ir{k}=normalize(Ir{k}); %Normalize image 
-Ir{k}=imadjust(Ir{k},[0.07 0.2]); %[low_in high_in]
+Ir{k}=rgb2gray(img_r{k}); %Note that each Ir{k} is a matrix. 
+Ir{k}=imadjust(Ir{k});%,[0.07 0.2]); %[low_in high_in]
 Ir{k} = adapthisteq(Ir{k});
-Ir{k}=normalize(Ir{k}); %ReNormalize image
-Ir{k}=imcomplement(Ir{k});
-Ir{k}=edge(Ir{k},'log'); %edge function-Log method
+Ir{k}=wiener2(Ir{k},[5 5]);
+Ir{k}=im2bw(Ir{k},0.4);
 Ir{k}=bwlabel(Ir{k});
 end
 %TARGET IMAGES
 It=rgb2gray(img_t);
-It=im2double(It);It=normalize(It);It=imadjust(It,[0.07 0.2]); %[low_in high_in]
+It=imadjust(It);%,[0.07 0.2]); %[low_in high_in]
 It= adapthisteq(It);
-It=normalize(It);It=imcomplement(It);It=edge(It,'log');It=bwlabel(It);        
+It=wiener2(It,[5 5]);
+It=im2bw(It,0.4);
+It=bwlabel(It);     
 
 %% FT OF TARGET AND REFERENCES
 %References
@@ -64,7 +63,7 @@ pc{k}=ifft2(Ft.*Fr{k});  %Note that each pc{k} is a matrix
 end
 
 %% CALCULATING PCE FOR EACH CORRELATION
-%Remember that things like E_´plane_ij or ET_peak are matrix and a vector
+%Remember that things like E_Â´plane_ij or ET_peak are matrix and a vector
 %respectively, therefore here the definition is done like this:
 
 sum_Fr=zeros(size(Fr{1},1),size(Fr{1},2)); %Initializing this matrix to be the same size of the references FT, 
